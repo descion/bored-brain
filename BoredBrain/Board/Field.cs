@@ -21,10 +21,6 @@ namespace BoredBrain {
         public string Name { get; set; }
         public abstract FieldType Type { get; }
 
-        public Field() {
-            this.Id = Guid.NewGuid();
-        }
-
         public string Serialize() {
             return this.Type.ToString() + SERIALIZATION_SEPARATOR + this.Name + SERIALIZATION_SEPARATOR + this.SerializeData();
         }

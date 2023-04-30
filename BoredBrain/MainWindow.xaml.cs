@@ -27,7 +27,10 @@ namespace BoredBrain {
             InitializeComponent();
 
             this.board = this.CreateTestboard();
+            this.board = this.UseTestBoard();
+
             this.board.OnBoardChanged += this.OnBoardChanged;
+            
             this.ConstructBoard();
         }
 
@@ -36,7 +39,7 @@ namespace BoredBrain {
         }
 
         private void ConstructBoard() {
-            SelectField columnField = (SelectField)this.board.Structure.GetFieldById(this.board.ColumnField);
+            SelectField columnField = (SelectField)this.board.ColumnField;
 
             for (int i = 0; i < columnField.PossibleValues.Count; i++) {
                 this.CreateColumn(columnField, columnField.PossibleValues[i]);
@@ -63,52 +66,58 @@ namespace BoredBrain {
         }
 
         private Board CreateTestboard() {
-            //if (Directory.Exists("TestFolder")) {
-            //    Directory.Delete("TestFolder", true);
-            //}
+            if (Directory.Exists("TestFolder")) {
+                Directory.Delete("TestFolder", true);
+            }
 
-            //Directory.CreateDirectory("TestFolder");
+            Directory.CreateDirectory("TestFolder");
 
             Board b = new Board("TestFolder");
 
+            Field test1 = new TextField() {
+                Name = "FirstTestField"
+            };
+
+            b.Structure.AddField(test1);
+
+            Field test2 = new MultiselectField() {
+                Name = "SecondTestField"
+            };
+
+            b.Structure.AddField(test2);
+
+            SimpleSelectField test3 = new SimpleSelectField() {
+                Name = "Status"
+            };
+
+            test3.PossibleValues.Add("ToDo");
+            test3.PossibleValues.Add("In Progress");
+            test3.PossibleValues.Add("Blocked");
+            test3.PossibleValues.Add("Done");
+
+            b.Structure.AddField(test3);
+            b.ColumnField = test3;
+
+            Card newCard = b.CreateCard();
+
+            newCard.Title = "My first Card!";
+            newCard.Content = "Main content Stuff with all the nice things that you need!\n[] Done!";
+
+            newCard.SetFieldValue(test1, "This is my field1 value.");
+            newCard.SetFieldValue(test2, new string[] { "Tag1", "Tag2", "Tag3" });
+            newCard.SetFieldValue(test3, test3.PossibleValues[1]);
+
+            b.AddCard(newCard);
+
+            b.Save();
+
+            return b;
+        }
+
+        private Board UseTestBoard() {
+            Board b = new Board("TestFolder");
+
             b.Load();
-
-            //Field test1 = new TextField() {
-            //    Name = "FirstTestField"
-            //};
-
-            //b.Structure.AddField(test1);
-
-            //Field test2 = new MultiselectField() {
-            //    Name = "SecondTestField"
-            //};
-
-            //b.Structure.AddField(test2);
-
-            //SimpleSelectField test3 = new SimpleSelectField() {
-            //    Name = "Status"
-            //};
-
-            //test3.PossibleValues.Add("ToDo");
-            //test3.PossibleValues.Add("In Progress");
-            //test3.PossibleValues.Add("Blocked");
-            //test3.PossibleValues.Add("Done");
-
-            //b.Structure.AddField(test3);
-            //b.ColumnField = test3.Id;
-
-            //Card newCard = b.CreateCard();
-
-            //newCard.Title = "My first Card!";
-            //newCard.Content = "Main content Stuff with all the nice things that you need!\n[] Done!";
-
-            //newCard.SetField(test1.Id, "This is my field1 value.");
-            //newCard.SetField(test2.Id, new string[] { "Tag1", "Tag2", "Tag3" });
-            //newCard.SetField(test3.Id, test3.PossibleValues[1]);
-
-            //b.AddCard(newCard);
-
-            //b.Save();
 
             return b;
         }

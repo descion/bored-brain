@@ -18,8 +18,8 @@ namespace BoredBrain {
             this.Fields.Add(f);
         }
 
-        public Field GetFieldById(Guid id) {
-            return this.Fields.Find((Field f) => { return f.Id == id; });
+        public Field GetFieldByName(string name) {
+            return this.Fields.Find((Field f) => { return f.Name == name; });
         }
 
         public string Serialize() {

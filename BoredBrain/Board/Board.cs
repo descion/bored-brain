@@ -14,8 +14,8 @@ namespace BoredBrain {
 
         public Structure Structure { get; set; }
 
-        public Guid ColumnField { get; set; }
-        public Guid CategoryField { get; set; }
+        public Field ColumnField { get; set; }
+        public Field CategoryField { get; set; }
 
         public List<Card> Cards { get; private set; }
 
@@ -57,8 +57,8 @@ namespace BoredBrain {
             StringBuilder boardFileContent = new StringBuilder();
             boardFileContent.AppendLine(this.id.ToString());
             boardFileContent.AppendLine(".bbs");
-            boardFileContent.AppendLine(this.ColumnField.ToString());
-            boardFileContent.AppendLine(this.CategoryField.ToString());
+            boardFileContent.AppendLine(this.ColumnField != null ? this.ColumnField.Name : "");
+            boardFileContent.AppendLine(this.CategoryField != null ? this.CategoryField.Name : "");
 
             File.WriteAllText(Path.Combine(this.path, ".bbs"), this.Structure.Serialize());
             File.WriteAllText(Path.Combine(this.path, ".bbb"), boardFileContent.ToString());
@@ -75,14 +75,15 @@ namespace BoredBrain {
             using (StreamReader boardReader = new StreamReader(boardFile)) {
                 string boardId = boardReader.ReadLine();
                 string structurePath = boardReader.ReadLine();
-                this.ColumnField = Guid.Parse(boardReader.ReadLine());
-                this.CategoryField = Guid.Parse(boardReader.ReadLine());
 
                 Structure boardStructure = new Structure();
                 boardStructure.Deserialize(File.ReadAllText(Path.Combine(this.path, structurePath)));
+                this.Structure = boardStructure;
+
+                this.ColumnField = this.Structure.GetFieldByName(boardReader.ReadLine());
+                this.CategoryField = this.Structure.GetFieldByName(boardReader.ReadLine());
 
                 this.id = Guid.Parse(boardId);
-                this.Structure = boardStructure;
             }
 
             string[] cardFiles = Directory.GetFiles(this.path, "*.bbc");
