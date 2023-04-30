@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BoredBrain"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" MinWidth="300">
+             d:DesignHeight="450" d:DesignWidth="800" Width="300">
     <Border BorderBrush="Gray" BorderThickness="2px">
         <Grid Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowDrop="True" Drop="Grid_Drop">
             <Grid.RowDefinitions>

@@ -21,18 +21,28 @@ namespace BoredBrain {
 
         public Column Column { get; set; }
         public  Card Card { get; private set; }
+
+        public delegate void OnEditCardDelegate(Card c);
+
+        public event OnEditCardDelegate OnEditCard;
         
         public CardElement(Card card) {
             InitializeComponent();
 
             this.Card = card;
 
-            this.Title.Content = this.Card.Title;
+            this.Title.Text = this.Card.Title;
         }
 
         private void Card_MouseMove(object sender, MouseEventArgs e) {
             if (e.LeftButton == MouseButtonState.Pressed) {
                 DragDrop.DoDragDrop(this, new DataObject(DataFormats.Serializable, this.Card), DragDropEffects.Move);
+            }
+        }
+
+        private void Card_MouseUp(object sender, MouseButtonEventArgs e) {
+            if(e.ChangedButton == MouseButton.Left) {
+                this.OnEditCard?.Invoke(this.Card);
             }
         }
     }

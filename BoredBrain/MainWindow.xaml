@@ -5,17 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoredBrain"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200">
+        Title="Bored Brain" Height="800" Width="1200" WindowState="Maximized">
     <Window.Background>
         <SolidColorBrush Color="#1a1a1a"/>
     </Window.Background>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-        <StackPanel Orientation="Horizontal" Name="MainPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanHorizontallyScroll="True" >
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type local:Column}">
-                    <Setter Property="Margin" Value="10"/>
-                </Style>
-            </StackPanel.Resources>
-        </StackPanel>
-    </ScrollViewer>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Create">
+                <MenuItem Header="_Card" Click="CreateCard_Click"></MenuItem>
+                <MenuItem Header="_Column" Click="CreateColumn_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+            <Grid>
+                <StackPanel Orientation="Horizontal" Name="MainPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanHorizontallyScroll="True" >
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type local:Column}">
+                            <Setter Property="Margin" Value="10"/>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+                
+                <local:CreateDialog Visibility="Hidden" x:Name="Dialog"></local:CreateDialog>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
 </Window>

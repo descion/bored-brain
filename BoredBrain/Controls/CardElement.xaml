@@ -5,14 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BoredBrain"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" MouseMove="Card_MouseMove" Margin="10">
+             d:DesignHeight="450" d:DesignWidth="800" MouseMove="Card_MouseMove" MouseUp="Card_MouseUp" Margin="10">
     <Border BorderBrush="Gray" BorderThickness="1">
         <Grid Height="auto" HorizontalAlignment="Stretch">
             <Grid.Background>
                 <SolidColorBrush Color="#202020"/>
             </Grid.Background>
-            <Label Name="Title" Foreground="White" FontSize="16">
-            </Label>
+            <TextBlock Name="Title" Foreground="White" FontSize="16" TextWrapping="Wrap" Margin="10"></TextBlock>
         </Grid>
     </Border>
 </UserControl>

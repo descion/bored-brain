@@ -42,6 +42,7 @@ namespace BoredBrain {
         public void AddCard(Card card) {
             this.Cards.Add(card);
             card.OnDataChanged += this.OnCardChanged;
+            this.OnBoardChanged?.Invoke();
         }
 
         private void OnCardChanged(Card c) {
