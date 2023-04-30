@@ -17,7 +17,7 @@ namespace BoredBrain {
     public abstract class Field {
 
         private const string SERIALIZATION_SEPARATOR = ":::";
-        public Guid Id { get; private set; }
+
         public string Name { get; set; }
         public abstract FieldType Type { get; }
 
@@ -26,16 +26,15 @@ namespace BoredBrain {
         }
 
         public string Serialize() {
-            return this.Type.ToString() + SERIALIZATION_SEPARATOR + this.Id.ToString() + SERIALIZATION_SEPARATOR + this.Name + SERIALIZATION_SEPARATOR + this.SerializeData();
+            return this.Type.ToString() + SERIALIZATION_SEPARATOR + this.Name + SERIALIZATION_SEPARATOR + this.SerializeData();
         }
 
         public void Deserialize(string fieldDefinition) {
             string[] contents = fieldDefinition.Split(new string[] { SERIALIZATION_SEPARATOR }, StringSplitOptions.None);
 
-            this.Id = Guid.Parse(contents[1]);
-            this.Name = contents[2];
+            this.Name = contents[1];
 
-            this.DeserializeData(contents[3]);
+            this.DeserializeData(contents[2]);
         }
 
         protected virtual string SerializeData() { return string.Empty; }

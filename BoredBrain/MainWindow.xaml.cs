@@ -39,12 +39,12 @@ namespace BoredBrain {
             SelectField columnField = (SelectField)this.board.Structure.GetFieldById(this.board.ColumnField);
 
             for (int i = 0; i < columnField.PossibleValues.Count; i++) {
-                this.CreateColumn(columnField.Id, columnField.PossibleValues[i]);
+                this.CreateColumn(columnField, columnField.PossibleValues[i]);
             }
         }
 
-        private Column CreateColumn(Guid fieldId, string fieldValue) {
-            Column c1 = new Column(fieldId, fieldValue);
+        private Column CreateColumn(Field field, string fieldValue) {
+            Column c1 = new Column(field, fieldValue);
             c1.SetValue(Grid.ColumnProperty, 0);
 
             MainPanel.Children.Add(c1);

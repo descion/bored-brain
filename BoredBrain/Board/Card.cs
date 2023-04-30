@@ -20,7 +20,7 @@ namespace BoredBrain {
         private string content;
         public string Content { get { return this.content; } set { this.content = value; this.OnDataChanged?.Invoke(this); } }
 
-        private Dictionary<Guid, object> Fields { get; set; }
+        private Dictionary<Field, object> Fields { get; set; }
 
         public delegate void OnCardDataChangedDelegate(Card c);
 
@@ -29,16 +29,16 @@ namespace BoredBrain {
         public Card(Structure structure) {
             this.Id = Guid.NewGuid();
             this.structure = structure;
-            this.Fields = new Dictionary<Guid, object>();
+            this.Fields = new Dictionary<Field, object>();
         }
 
-        public void SetField(Guid fieldId, object value) {
-            this.Fields[fieldId] = value;
+        public void SetFieldValue(Field field, object value) {
+            this.Fields[field] = value;
             this.OnDataChanged?.Invoke(this);
         }
 
-        public object GetField(Guid fieldId) {
-            return this.Fields[fieldId];
+        public object GetFieldValue(Field field) {
+            return this.Fields[field];
         }
 
         public string Serialize() {
@@ -52,11 +52,11 @@ namespace BoredBrain {
 
                 string fieldValue = "";
 
-                if (this.Fields.ContainsKey(currentField.Id)) {
-                    fieldValue = currentField.SerializeValue(this.Fields[currentField.Id]);
+                if (this.Fields.ContainsKey(currentField)) {
+                    fieldValue = currentField.SerializeValue(this.Fields[currentField]);
                 }
 
-                cardContent.AppendLine(currentField.Id+ ":" + fieldValue);
+                cardContent.AppendLine(currentField.Name + ":" + fieldValue);
             }
 
             cardContent.AppendLine(CONTENT_START);
@@ -75,15 +75,15 @@ namespace BoredBrain {
 
                 while (currentLine != CONTENT_START) {
 
-                    Guid fieldId = Guid.Parse(currentLine.Substring(0, currentLine.IndexOf(':')));
+                    string fieldName = currentLine.Substring(0, currentLine.IndexOf(':'));
                     string fieldContent = currentLine.Substring(currentLine.IndexOf(':') + 1);
 
                     for (int i = 0; i < this.structure.Fields.Count; i++) {
                         Field field = this.structure.Fields[i];
 
-                        if (field.Id == fieldId) {
+                        if (field.Name == fieldName) {
                             object fieldValue = field.DeserializeValue(fieldContent);
-                            this.Fields.Add(field.Id, fieldValue);
+                            this.Fields.Add(field, fieldValue);
                         }
                     }
 

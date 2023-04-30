@@ -20,19 +20,19 @@ namespace BoredBrain {
     /// </summary>
     public partial class Column : UserControl {
 
-        private Guid fieldId;
+        private Field field;
         private string fieldValue;
 
-        public Column(Guid fieldId, string fieldValue) {
+        public Column(Field field, string fieldValue) {
             InitializeComponent();
 
-            this.fieldId = fieldId;
+            this.field = field;
             this.fieldValue = fieldValue;
             this.Title.Content = fieldValue;
         }
 
         public void AddCard(CardElement c) {
-            if((string)c.Card.GetField(this.fieldId) == this.fieldValue) {
+            if((string)c.Card.GetFieldValue(this.field) == this.fieldValue) {
                 c.Column = this;
                 this.Cards.Children.Add(c);
             }
@@ -44,7 +44,7 @@ namespace BoredBrain {
 
         private void Grid_Drop(object sender, DragEventArgs e) {
             Card card = (Card)e.Data.GetData(DataFormats.Serializable);
-            card.SetField(this.fieldId, this.fieldValue);
+            card.SetFieldValue(this.field, this.fieldValue);
         }
     }
 }
