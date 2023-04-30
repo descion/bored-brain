@@ -4,13 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoredBrain"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Bored Brain" Height="800" Width="1200" WindowState="Maximized">
-    <Window.Background>
-        <SolidColorBrush Color="#1a1a1a"/>
-    </Window.Background>
+        Title="Bored Brain" Height="800" Width="1200" WindowState="Maximized" Icon="Icon.png">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
+            <Menu.Background>
+                <SolidColorBrush Color="#1a1a1a"/>
+            </Menu.Background>
             <MenuItem Header="_Create">
                 <MenuItem Header="_Card" Click="CreateCard_Click"></MenuItem>
                 <MenuItem Header="_Column" Click="CreateColumn_Click"></MenuItem>
