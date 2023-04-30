@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:BoredBrain"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
+    <Window.Background>
+        <SolidColorBrush Color="#1a1a1a"/>
+    </Window.Background>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
         <StackPanel Orientation="Horizontal" Name="MainPanel" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanHorizontallyScroll="True" >
             <StackPanel.Resources>
