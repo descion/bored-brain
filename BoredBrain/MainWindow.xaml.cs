@@ -26,7 +26,7 @@ namespace BoredBrain {
         public MainWindow() {
             InitializeComponent();
 
-            this.board = this.CreateTestboard();
+            //this.board = this.CreateTestboard();
             this.board = this.UseTestBoard();
 
             this.board.OnBoardChanged += this.OnBoardChanged;
@@ -53,7 +53,7 @@ namespace BoredBrain {
             MainPanel.Children.Add(c1);
 
             for (int i = 0; i < this.board.Cards.Count; i++) {
-                c1.AddCard(new CardElement(this.board.Cards[0]));
+                c1.AddCard(new CardElement(this.board.Cards[i]));
             }
 
             return c1;
@@ -92,7 +92,7 @@ namespace BoredBrain {
 
             test3.PossibleValues.Add("ToDo");
             test3.PossibleValues.Add("In Progress");
-            test3.PossibleValues.Add("Blocked");
+            test3.PossibleValues.Add("Too Tired");
             test3.PossibleValues.Add("Done");
 
             b.Structure.AddField(test3);
@@ -100,14 +100,20 @@ namespace BoredBrain {
 
             Card newCard = b.CreateCard();
 
-            newCard.Title = "My first Card!";
+            newCard.Title = "Grundstruktur für eigene Board-Anwendung bauen";
             newCard.Content = "Main content Stuff with all the nice things that you need!\n[] Done!";
 
             newCard.SetFieldValue(test1, "This is my field1 value.");
             newCard.SetFieldValue(test2, new string[] { "Tag1", "Tag2", "Tag3" });
-            newCard.SetFieldValue(test3, test3.PossibleValues[1]);
+            newCard.SetFieldValue(test3, test3.PossibleValues[0]);
+
+            Card newCard2 = b.CreateCard();
+
+            newCard2.Title = "Alles fertig machen";
+            newCard2.SetFieldValue(test3, test3.PossibleValues[0]);
 
             b.AddCard(newCard);
+            b.AddCard(newCard2);
 
             b.Save();
 
