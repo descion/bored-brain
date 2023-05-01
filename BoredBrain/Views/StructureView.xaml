@@ -56,9 +56,18 @@
                             <ColumnDefinition Width="1*"></ColumnDefinition>
                             <ColumnDefinition Width=".5*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <TextBox Name="NewFieldName" Margin="10"></TextBox>
-                        <ComboBox Name="NewFieldType" Margin="10" Grid.Column="1">
-                            <ComboBoxItem>Text</ComboBoxItem>
+                        <TextBox 
+                            Name="NewFieldName"
+                            Margin="10"
+                            materialDesign:HintAssist.Hint="New Field Name"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <ComboBox 
+                            Name="NewFieldType" 
+                            Margin="10" 
+                            Grid.Column="1"
+                            materialDesign:HintAssist.Hint="New Field Type"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBoxItem IsSelected="True">Text</ComboBoxItem>
                             <ComboBoxItem>Number</ComboBoxItem>
                             <ComboBoxItem>Select</ComboBoxItem>
                         </ComboBox>

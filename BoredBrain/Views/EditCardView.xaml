@@ -16,7 +16,7 @@
     <Grid>
         <Rectangle x:Name="Overlay" Fill="Black" Opacity=".8" Panel.ZIndex="1000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Rectangle>
 
-        <Grid Panel.ZIndex="1001" Width="800" Height="auto" VerticalAlignment="Center">
+        <Grid Panel.ZIndex="1001" Width="auto" Margin="500,0,500,0" Height="auto" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60px"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
@@ -48,7 +48,7 @@
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width=".5*" MaxWidth="400"></ColumnDefinition>
                         <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <TextBox
@@ -74,21 +74,23 @@
                         </ItemsControl>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
-                    <TextBlock
-                        Style="{StaticResource MaterialDesignBody1TextBlock}"
-                        Margin="20,0,0,0"
-                        Text="Content" />
-                    <TextBox                       
-                        MinHeight="100"
-                        Margin="20,0,20,20"
+                    <Grid Grid.RowSpan="2" Grid.Column="1" Margin="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <TextBox                       
+                        Margin="20,0,20,0"
+                        materialDesign:HintAssist.Hint="Content"
                         VerticalAlignment="Stretch"
                         AcceptsReturn="True"
                         Text="{Binding Content}"
                         TextWrapping="Wrap"
-                        Style="{StaticResource MaterialDesignFilledTextBox}"
-                        VerticalScrollBarVisibility="Auto" />
-                    </StackPanel>
+                        VerticalContentAlignment="Top"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        VerticalScrollBarVisibility="Auto"
+                        Grid.Row="1"/>
+                    </Grid>
                 </Grid>
                 
             </Grid>

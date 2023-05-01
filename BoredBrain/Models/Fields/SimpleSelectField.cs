@@ -3,6 +3,10 @@
         public override FieldType Type => FieldType.Select;
 
         public override string ConvertValueToString(object value) {
+            if (this.PossibleValues.Count > 0 && !this.PossibleValues.Contains((string)value)) {
+                return this.PossibleValues[0];
+            }
+
             return (string)value;
         }
 

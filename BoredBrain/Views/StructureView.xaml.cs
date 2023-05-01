@@ -56,6 +56,9 @@ namespace BoredBrain.Views {
                     PossibleValues = new ObservableCollection<string>()
                 }
             });
+
+            this.NewFieldName.Text = "";
+            this.NewFieldType.SelectedIndex = 0;
         }
     }
 }

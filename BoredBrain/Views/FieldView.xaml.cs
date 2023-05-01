@@ -27,6 +27,8 @@ namespace BoredBrain.Views {
             FieldDefinition definition = (FieldDefinition)this.DataContext;
 
             definition.PossibleValues.Add(this.NewPossibleValue.Text);
+
+            this.NewPossibleValue.Text = "";
         }
     }
 }
