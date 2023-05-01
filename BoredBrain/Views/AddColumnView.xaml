@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="BoredBrain.Views.AddColumnView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:BoredBrain.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Rectangle x:Name="Overlay" Fill="Black" Opacity=".8" Panel.ZIndex="1000" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Rectangle>
+
+        <Grid Panel.ZIndex="1001" Width="400" Height="auto" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60px"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="60px"></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone
+                Mode="PrimaryDark" Height="60px">
+                <DockPanel>
+                    <TextBlock Style="{StaticResource MaterialDesignHeadline6TextBlock}" VerticalAlignment="Center" Margin="20,0,0,0" Text="Add Column"/>
+                    <Button
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,0,10,0"
+                        Click="Close_Click">
+                        <materialDesign:PackIcon
+                                Width="16"
+                                Height="16"
+                                VerticalAlignment="Center"
+                                Kind="CloseThick" />
+                    </Button>
+                </DockPanel>
+            </materialDesign:ColorZone>
+            <Grid Background="{DynamicResource MaterialDesignPaper}" Grid.Row="1">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBox
+                        Margin="20px"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Stretch"
+                        materialDesign:HintAssist.Hint="Column Name"
+                        Text="{Binding Name}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </Grid>
+
+            </Grid>
+            <Grid Background="{DynamicResource MaterialDesignPaper}" Grid.Row="2">
+                <Separator VerticalAlignment="Top"></Separator>
+                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button  HorizontalAlignment="Right" Grid.Row="2" Margin="10,0,10,0" Click="Add_Click">Add</Button>
+                    <Button Style="{StaticResource MaterialDesignPaperButton}" HorizontalAlignment="Right" Grid.Row="2" Margin="0,0,10,0" Click="Close_Click">Cancel</Button>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

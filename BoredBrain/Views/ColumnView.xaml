@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="BoredBrain.Views.ColumnView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BoredBrain.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <GroupBox
+            AllowDrop="True"
+            Drop="Card_Drop"
+            Margin="16"
+            Width="300px"
+            FontSize="16"
+            materialDesign:ColorZoneAssist.Mode="PrimaryMid" 
+            Style="{StaticResource MaterialDesignCardGroupBox}"
+            Header="{Binding Headline}">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel
+                         Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="32"
+                            Height="32"
+                            VerticalAlignment="Center"
+                            Kind="TableColumn" />
+                        <TextBlock
+                              Margin="8,0,0,0"
+                              VerticalAlignment="Center"
+                              Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                              Text="{Binding}" />       
+                    </StackPanel>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
+            <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Cards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:CardView DataContext="{Binding CardViewModel}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+            
+        </GroupBox>
+    </Grid>
+</UserControl>

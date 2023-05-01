@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="BoredBrain.Views.BoardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BoredBrain.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Name="MainPanel">
+        <DockPanel>
+            <materialDesign:ColorZone
+                Mode="PrimaryDark" DockPanel.Dock="Top">
+                <Menu>
+                    <MenuItem Header="_Board">
+                        <MenuItem Header="_Create Board" Click="CreateBoard_Click"></MenuItem>
+                        <MenuItem Header="_Open Board" Click="OpenBoard_Click"></MenuItem>
+                        <MenuItem Header="_Edit Structure" Click="EditStructure_Click"></MenuItem>
+                    </MenuItem>
+
+                    <MenuItem Header="_Create Column" Click="CreateColumn_Click"></MenuItem>
+                    <MenuItem Header="_Create Card" Click="CreateCard_Click"></MenuItem>
+                </Menu>
+            </materialDesign:ColorZone>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <ComboBox 
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                        materialDesign:HintAssist.Hint="Column field" 
+                        MinWidth="200px"
+                        Margin="10,10,0,0"
+                        ItemsSource="{Binding SelectFields}" 
+                        SelectedValue="{Binding ColumnField}" 
+                        SelectionChanged="ColumnField_SelectionChanged" Width="100px"></ComboBox>
+                    <ComboBox 
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                        materialDesign:HintAssist.Hint="Category field" 
+                        MinWidth="200px"
+                        Margin="10,10,0,0"
+                        ItemsSource="{Binding SelectFields}" 
+                        SelectedValue="{Binding CategoryField}" 
+                        SelectionChanged="CategoryField_SelectionChanged" Width="100px"></ComboBox>
+                </StackPanel>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Columns}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ColumnView DataContext="{Binding ColumnViewModel}"></local:ColumnView>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</UserControl>

@@ -19,203 +19,203 @@ namespace BoredBrain {
         public MainWindow() {
             InitializeComponent();
 
-            this.InitializeBoard("SavedBoard");
+            //this.InitializeBoard("SavedBoard");
             
         }
 
         //---------------------------------------------------------------------------
 
-        private void InitializeBoard(string path) {
-            if(this.board != null) {
-                this.board.OnBoardChanged -= this.OnBoardChanged;
-            }
+        //private void InitializeBoard(string path) {
+        //    if(this.board != null) {
+        //        this.board.OnBoardChanged -= this.OnBoardChanged;
+        //    }
 
-            if (!File.Exists(Path.Combine(path, ".bbb"))) {
+        //    if (!File.Exists(Path.Combine(path, ".bbb"))) {
                 
-                Board templateBoard = new Board(path);
-                SimpleSelectField statusField = new SimpleSelectField() {
-                    Name = "Status"
-                };
+        //        Board templateBoard = new Board(path);
+        //        SimpleSelectField statusField = new SimpleSelectField() {
+        //            Name = "Status"
+        //        };
 
-                templateBoard.Structure.AddField(statusField);
-                templateBoard.ColumnField = statusField;
+        //        templateBoard.Structure.AddField(statusField);
+        //        templateBoard.ColumnField = statusField;
 
-                BoardSerializer.Save(templateBoard);
-            }
+        //        BoardSerializer.Save(templateBoard);
+        //    }
 
-            this.board = new Board(path);
-            BoardSerializer.Load(this.board);
+        //    this.board = new Board(path);
+        //    BoardSerializer.Load(this.board);
 
-            this.board.OnBoardChanged += this.OnBoardChanged;
-            this.ConstructBoard();
-        }
+        //    this.board.OnBoardChanged += this.OnBoardChanged;
+        //    this.ConstructBoard();
+        //}
 
         //---------------------------------------------------------------------------
 
-        private void ConstructBoard() {
-            this.MainPanel.Children.Clear();
+        //private void ConstructBoard() {
+        //    this.MainPanel.Children.Clear();
             
-            for (int i = 0; i < this.board.ColumnField.PossibleValues.Count; i++) {
-                this.CreateColumn(this.board.ColumnField, this.board.ColumnField.PossibleValues[i]);
-            }
-        }
+        //    for (int i = 0; i < this.board.ColumnField.PossibleValues.Count; i++) {
+        //        this.CreateColumn(this.board.ColumnField, this.board.ColumnField.PossibleValues[i]);
+        //    }
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private Column CreateColumn(Field field, string fieldValue) {
-            Column c1 = new Column(field, fieldValue);
-            c1.SetValue(Grid.ColumnProperty, 0);
+        //private Column CreateColumn(Field field, string fieldValue) {
+        //    Column c1 = new Column(field, fieldValue);
+        //    c1.SetValue(Grid.ColumnProperty, 0);
 
-            MainPanel.Children.Add(c1);
+        //    MainPanel.Children.Add(c1);
 
-            for (int i = 0; i < this.board.Cards.Count; i++) {
-                CardElement newCardElement = new CardElement(this.board.Cards[i]);
-                c1.AddCard(newCardElement);
-                newCardElement.OnEditCard += this.EditCard;
-            }
+        //    for (int i = 0; i < this.board.Cards.Count; i++) {
+        //        CardElement newCardElement = new CardElement(this.board.Cards[i]);
+        //        c1.AddCard(newCardElement);
+        //        newCardElement.OnEditCard += this.EditCard;
+        //    }
 
-            return c1;
-        }
+        //    return c1;
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void OnBoardChanged() {
-            BoardSerializer.Save(this.board);
-            this.ConstructBoard();
-        }
+        //private void OnBoardChanged() {
+        //    BoardSerializer.Save(this.board);
+        //    this.ConstructBoard();
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void CreateColumn_Click(object sender, RoutedEventArgs e) {
+        //private void CreateColumn_Click(object sender, RoutedEventArgs e) {
 
-            List<InputDefinition> inputs = new List<InputDefinition>() {
-                new InputDefinition() {
-                    name = this.board.ColumnField.Name,
-                    type = FieldType.Text,
-                    value = ""
-                }
-            };
+        //    List<InputDefinition> inputs = new List<InputDefinition>() {
+        //        new InputDefinition() {
+        //            name = this.board.ColumnField.Name,
+        //            type = FieldType.Text,
+        //            value = ""
+        //        }
+        //    };
 
-            this.Dialog.Open("Create Column", "Create", inputs, this.OnCreateColumn);
-        }
+        //    this.Dialog.Open("Create Column", "Create", inputs, this.OnCreateColumn);
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void CreateCard_Click(object sender, RoutedEventArgs e) {
-            this.Dialog.Open("Create Card", "Create", this.GetInputDefinitionsForCard(), this.OnCreateCard);
-        }
+        //private void CreateCard_Click(object sender, RoutedEventArgs e) {
+        //    this.Dialog.Open("Create Card", "Create", this.GetInputDefinitionsForCard(), this.OnCreateCard);
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void CreateBoard_Click(object sender, RoutedEventArgs e) {
-            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog()) {
+        //private void CreateBoard_Click(object sender, RoutedEventArgs e) {
+        //    using (FolderBrowserDialog folderDialog = new FolderBrowserDialog()) {
 
-                folderDialog.ShowDialog();
-                string boardPath = folderDialog.SelectedPath;
+        //        folderDialog.ShowDialog();
+        //        string boardPath = folderDialog.SelectedPath;
 
-                this.InitializeBoard(boardPath);
-            }
-        }
+        //        this.InitializeBoard(boardPath);
+        //    }
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void OpenBoard_Click(object sender, RoutedEventArgs e) {
-            using (OpenFileDialog openDialog = new OpenFileDialog()) {
-                openDialog.Filter = "Bored Brain Board Files (*.bbb)|*.bbb";
-                if (openDialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel) {
-                    this.InitializeBoard(new FileInfo(openDialog.FileName).DirectoryName);
-                }
-            }
+        //private void OpenBoard_Click(object sender, RoutedEventArgs e) {
+        //    using (OpenFileDialog openDialog = new OpenFileDialog()) {
+        //        openDialog.Filter = "Bored Brain Board Files (*.bbb)|*.bbb";
+        //        if (openDialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel) {
+        //            this.InitializeBoard(new FileInfo(openDialog.FileName).DirectoryName);
+        //        }
+        //    }
 
-        }
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void OnCreateCard(List<InputDefinition> fields) {
+        //private void OnCreateCard(List<InputDefinition> fields) {
 
-            Card newCard = this.board.CreateCard();
+        //    Card newCard = this.board.CreateCard();
 
-            this.ApplyValuesToCard(newCard, fields);
+        //    this.ApplyValuesToCard(newCard, fields);
 
-            this.board.AddCard(newCard);
-        }
+        //    this.board.AddCard(newCard);
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void OnSaveCard(List<InputDefinition> fields) {
-            this.ApplyValuesToCard(this.cardInEditMode, fields);
-        }
+        //private void OnSaveCard(List<InputDefinition> fields) {
+        //    this.ApplyValuesToCard(this.cardInEditMode, fields);
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void OnCreateColumn(List<InputDefinition> fields) {
-            string newColumn = (string)fields[0].value;
+        //private void OnCreateColumn(List<InputDefinition> fields) {
+        //    string newColumn = (string)fields[0].value;
 
-            this.board.ColumnField.PossibleValues.Add(newColumn);
-            BoardSerializer.Save(this.board);
-            this.OnBoardChanged();
-        }
+        //    this.board.ColumnField.PossibleValues.Add(newColumn);
+        //    BoardSerializer.Save(this.board);
+        //    this.OnBoardChanged();
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void EditCard(Card card) {
-            this.cardInEditMode = card;
-            this.Dialog.Open("Edit Card", "Save", this.GetInputDefinitionsForCard(card), this.OnSaveCard);
-        }
+        //private void EditCard(Card card) {
+        //    this.cardInEditMode = card;
+        //    this.Dialog.Open("Edit Card", "Save", this.GetInputDefinitionsForCard(card), this.OnSaveCard);
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private List<InputDefinition> GetInputDefinitionsForCard(Card c = null) {
-            List<InputDefinition> inputs = new List<InputDefinition>() {
-                new InputDefinition() {
-                    name = "Title",
-                    type = FieldType.Text,
-                    value = c != null? c.Title : ""
-                },
+        //private List<InputDefinition> GetInputDefinitionsForCard(Card c = null) {
+        //    List<InputDefinition> inputs = new List<InputDefinition>() {
+        //        new InputDefinition() {
+        //            name = "Title",
+        //            type = FieldType.Text,
+        //            value = c != null? c.Title : ""
+        //        },
 
-                new InputDefinition() {
-                    name = "Content",
-                    type = FieldType.Text,
-                    value = c != null? c.Content : ""
-                }
-            };
+        //        new InputDefinition() {
+        //            name = "Content",
+        //            type = FieldType.Text,
+        //            value = c != null? c.Content : ""
+        //        }
+        //    };
 
-            for (int i = 0; i < this.board.Structure.Fields.Count; i++) {
-                Field currentField = this.board.Structure.Fields[i];
+        //    for (int i = 0; i < this.board.Structure.Fields.Count; i++) {
+        //        Field currentField = this.board.Structure.Fields[i];
 
-                InputDefinition input = new InputDefinition() {
-                    name = currentField.Name,
-                    type = currentField.Type,
-                    value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : currentField.GetDefaultValue(),
-                    possibleValues = currentField.PossibleValues
-                };
+        //        InputDefinition input = new InputDefinition() {
+        //            name = currentField.Name,
+        //            type = currentField.Type,
+        //            value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : currentField.GetDefaultValue(),
+        //            possibleValues = currentField.PossibleValues
+        //        };
 
-                inputs.Add(input);
-            }
+        //        inputs.Add(input);
+        //    }
 
-            return inputs;
-        }
+        //    return inputs;
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void ApplyValuesToCard(Card card, List<InputDefinition> fields) {
-            InputDefinition titleInput = fields.Find((InputDefinition d) => { return d.name == "Title"; });
-            fields.Remove(titleInput);
-            InputDefinition contentInput = fields.Find((InputDefinition d) => { return d.name == "Content"; });
-            fields.Remove(contentInput);
+        //private void ApplyValuesToCard(Card card, List<InputDefinition> fields) {
+        //    InputDefinition titleInput = fields.Find((InputDefinition d) => { return d.name == "Title"; });
+        //    fields.Remove(titleInput);
+        //    InputDefinition contentInput = fields.Find((InputDefinition d) => { return d.name == "Content"; });
+        //    fields.Remove(contentInput);
 
-            card.Title = (string)titleInput.value;
-            card.Content = (string)contentInput.value;
+        //    card.Title = (string)titleInput.value;
+        //    card.Content = (string)contentInput.value;
 
-            for (int i = 0; i < fields.Count; i++) {
-                card.SetFieldValue(this.board.Structure.GetFieldByName(fields[i].name), fields[i].value);
-            }
-        }
+        //    for (int i = 0; i < fields.Count; i++) {
+        //        card.SetFieldValue(this.board.Structure.GetFieldByName(fields[i].name), fields[i].value);
+        //    }
+        //}
 
-        //---------------------------------------------------------------------------
+        ////---------------------------------------------------------------------------
 
-        private void EditStructure_Click(object sender, RoutedEventArgs e) {
-            this.StructureDialog.Open(this.board, this.OnBoardChanged);
-        }
+        //private void EditStructure_Click(object sender, RoutedEventArgs e) {
+        //    this.StructureDialog.Open(this.board, this.OnBoardChanged);
+        //}
     }
 }

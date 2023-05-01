@@ -17,17 +17,12 @@ namespace BoredBrain {
     /// <summary>
     /// Interaction logic for TextInput.xaml
     /// </summary>
-    public partial class TextInput : InputBase {
+    public partial class TextInput : UserControl {
 
-        public TextInput(InputDefinition definition) : base(definition) {
+        public TextInput() {
             InitializeComponent();
 
-            this.Label.Content = definition.name;
-            this.Value.Text = (string)definition.value;
         }
 
-        public override void ApplyValue() {
-            this.definition.value = this.Value.Text;
-        }
     }
 }

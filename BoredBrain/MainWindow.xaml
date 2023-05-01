@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BoredBrain"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:views="clr-namespace:BoredBrain.Views"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -12,7 +12,10 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         mc:Ignorable="d"
         Title="Bored Brain" Height="800" Width="1200" WindowState="Maximized" Icon="Icon.png">
-    <DockPanel>
+    <Grid>
+        <views:BoardView></views:BoardView>
+    </Grid>
+    <!--<DockPanel>
         <Menu DockPanel.Dock="Top">
             <Menu.Background>
                 <SolidColorBrush Color="#1a1a1a"/>
@@ -40,5 +43,5 @@
                 <local:StructureDialog Visibility="Hidden" x:Name="StructureDialog"></local:StructureDialog>
             </Grid>
         </ScrollViewer>
-    </DockPanel>
+    </DockPanel>-->
 </Window>

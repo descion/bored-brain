@@ -18,16 +18,9 @@ namespace BoredBrain {
     /// <summary>
     /// Interaction logic for NumberInput.xaml
     /// </summary>
-    public partial class NumberInput : InputBase {
-        public NumberInput(InputDefinition definition) : base(definition) {
+    public partial class NumberInput : UserControl {
+        public NumberInput() {
             InitializeComponent();
-
-            this.Label.Content = definition.name;
-            this.Value.Text = ((int)definition.value).ToString();
-        }
-
-        public override void ApplyValue() {
-            this.definition.value = int.Parse(this.Value.Text);
         }
 
         private void Value_PreviewTextInput(object sender, TextCompositionEventArgs e) {

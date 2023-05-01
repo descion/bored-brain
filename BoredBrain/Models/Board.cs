@@ -118,5 +118,12 @@ namespace BoredBrain.Models {
 
         //---------------------------------------------------------------------------
 
+        public List<Card> GetCardsFiltered(Field field, object value) {
+            return this.Cards.FindAll(
+                (Card c) => { 
+                    return c.GetFieldValue(field).Equals(value); 
+                }
+            );
+        }
     }
 }

@@ -51,6 +51,5 @@ namespace BoredBrain.Models {
 
             return field.GetDefaultValue();
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoredBrain.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,17 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BoredBrain {
+namespace BoredBrain.Views {
     /// <summary>
-    /// Interaction logic for MultiselectInput.xaml
+    /// Interaction logic for FieldView.xaml
     /// </summary>
-    public partial class MultiselectInput : InputBase {
-        public MultiselectInput(InputDefinition definition) : base(definition) {
+    public partial class FieldView : UserControl {
+        public FieldView() {
             InitializeComponent();
         }
 
-        public override void ApplyValue() {
-            
+        private void AddPossibleValue_Click(object sender, RoutedEventArgs e) {
+            FieldDefinition definition = (FieldDefinition)this.DataContext;
+
+            definition.PossibleValues.Add(this.NewPossibleValue.Text);
         }
     }
 }
