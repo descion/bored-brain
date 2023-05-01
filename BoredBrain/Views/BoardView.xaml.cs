@@ -1,5 +1,6 @@
 ﻿using BoredBrain.Models;
 using BoredBrain.ViewModels;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,7 +34,10 @@ namespace BoredBrain.Views {
 
                 Board templateBoard = new Board(path);
                 SimpleSelectField statusField = new SimpleSelectField() {
-                    Name = "Status"
+                    Name = "Status",
+                    PossibleValues = new List<string> {
+                        "None"
+                    }
                 };
 
                 templateBoard.Structure.AddField(statusField);
