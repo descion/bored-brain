@@ -16,6 +16,9 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+
+        
         <Separator Grid.ColumnSpan="3" VerticalAlignment="Top"></Separator>
         <Label Name="Name" HorizontalAlignment="Stretch" FontSize="16">Name</Label>
         <Label Name="Type" Width="auto" Grid.Column="1" FontSize="16">Text</Label>

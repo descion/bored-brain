@@ -18,11 +18,8 @@ namespace BoredBrain {
     public class InputDefinition {
         public string name;
         public FieldType type;
-        public object value;
-    }
-
-    public class SelectInputDefinition : InputDefinition {
         public List<string> possibleValues;
+        public object value;
     }
 
 

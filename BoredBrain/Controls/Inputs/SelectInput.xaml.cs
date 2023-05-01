@@ -24,13 +24,11 @@ namespace BoredBrain {
 
             this.Label.Content = definition.name;
 
-            SelectInputDefinition selectDefinition = (SelectInputDefinition)definition;
-
-            for (int i = 0; i < selectDefinition.possibleValues.Count; i++) {
+            for (int i = 0; i < definition.possibleValues.Count; i++) {
                 ComboBoxItem valueItem = new ComboBoxItem();
-                valueItem.Content = selectDefinition.possibleValues[i];
+                valueItem.Content = definition.possibleValues[i];
 
-                valueItem.IsSelected = selectDefinition.possibleValues[i] == (string)definition.value;
+                valueItem.IsSelected = definition.possibleValues[i] == (string)definition.value;
 
                 this.Value.Items.Add(valueItem);
             }

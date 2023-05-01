@@ -111,11 +111,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Board\Board.cs" />
-    <Compile Include="Board\Card.cs" />
-    <Compile Include="Board\Filters\ICardFilter.cs" />
-    <Compile Include="Board\Field.cs" />
-    <Compile Include="Board\Structure.cs" />
+    <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\Card.cs" />
+    <Compile Include="Models\Fields\FieldFactory.cs" />
+    <Compile Include="Serialization\FieldSerializer.cs" />
+    <Compile Include="Models\Fields\FieldType.cs" />
+    <Compile Include="Models\Fields\MultiselectField.cs" />
+    <Compile Include="Models\Fields\NumberField.cs" />
+    <Compile Include="Models\Fields\SimpleSelectField.cs" />
+    <Compile Include="Models\Fields\TextField.cs" />
+    <Compile Include="Serialization\CardSerializer.cs" />
+    <Compile Include="Models\Fields\Field.cs" />
+    <Compile Include="Models\Structure.cs" />
+    <Compile Include="Serialization\StructureSerializer.cs" />
     <Compile Include="Controls\CardElement.xaml.cs">
       <DependentUpon>CardElement.xaml</DependentUpon>
     </Compile>

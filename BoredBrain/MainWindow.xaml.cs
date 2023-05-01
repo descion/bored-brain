@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BoredBrain.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -39,11 +40,11 @@ namespace BoredBrain {
                 templateBoard.Structure.AddField(statusField);
                 templateBoard.ColumnField = statusField;
 
-                templateBoard.Save();
+                BoardSerializer.Save(templateBoard);
             }
 
             this.board = new Board(path);
-            this.board.Load();
+            BoardSerializer.Load(this.board);
 
             this.board.OnBoardChanged += this.OnBoardChanged;
             this.ConstructBoard();
@@ -53,10 +54,9 @@ namespace BoredBrain {
 
         private void ConstructBoard() {
             this.MainPanel.Children.Clear();
-            SelectField columnField = (SelectField)this.board.ColumnField;
-
-            for (int i = 0; i < columnField.PossibleValues.Count; i++) {
-                this.CreateColumn(columnField, columnField.PossibleValues[i]);
+            
+            for (int i = 0; i < this.board.ColumnField.PossibleValues.Count; i++) {
+                this.CreateColumn(this.board.ColumnField, this.board.ColumnField.PossibleValues[i]);
             }
         }
 
@@ -80,7 +80,7 @@ namespace BoredBrain {
         //---------------------------------------------------------------------------
 
         private void OnBoardChanged() {
-            this.board.Save();
+            BoardSerializer.Save(this.board);
             this.ConstructBoard();
         }
 
@@ -151,8 +151,8 @@ namespace BoredBrain {
         private void OnCreateColumn(List<InputDefinition> fields) {
             string newColumn = (string)fields[0].value;
 
-            ((SelectField)this.board.ColumnField).PossibleValues.Add(newColumn);
-            this.board.Save();
+            this.board.ColumnField.PossibleValues.Add(newColumn);
+            BoardSerializer.Save(this.board);
             this.OnBoardChanged();
         }
 
@@ -183,48 +183,12 @@ namespace BoredBrain {
             for (int i = 0; i < this.board.Structure.Fields.Count; i++) {
                 Field currentField = this.board.Structure.Fields[i];
 
-                InputDefinition input = null;
-
-                switch (currentField.Type) {
-                    case FieldType.Text:
-                        input = new InputDefinition() {
-                            name = currentField.Name,
-                            type = currentField.Type,
-                            value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : ""
-                        };
-                        break;
-                    case FieldType.Number:
-                        input = new InputDefinition() {
-                            name = currentField.Name,
-                            type = currentField.Type,
-                            value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : 0
-                        };
-                        break;
-                    case FieldType.Select:
-                        List<string> possibleValues = ((SelectField)currentField).PossibleValues;
-
-                        input = new SelectInputDefinition() {
-                            name = currentField.Name,
-                            type = currentField.Type,
-                            value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : (possibleValues.Count > 0 ? possibleValues[0] : ""),
-                            possibleValues = possibleValues
-                        };
-                        break;
-                    case FieldType.Multiselect:
-                        List<string> possibleMultiValues = ((SelectField)currentField).PossibleValues;
-
-                        input = new SelectInputDefinition() {
-                            name = currentField.Name,
-                            type = currentField.Type,
-                            value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : new string[0],
-                            possibleValues = possibleMultiValues
-                        };
-                        break;
-                    case FieldType.Date:
-                        break;
-                    default:
-                        break;
-                }
+                InputDefinition input = new InputDefinition() {
+                    name = currentField.Name,
+                    type = currentField.Type,
+                    value = c != null ? c.GetFieldValue(this.board.Structure.GetFieldByName(currentField.Name)) : currentField.GetDefaultValue(),
+                    possibleValues = currentField.PossibleValues
+                };
 
                 inputs.Add(input);
             }

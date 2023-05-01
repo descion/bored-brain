@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoredBrain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BoredBrain {
+
+    public class StructureFieldDefinition {
+        public string Name;
+        public string Type;
+    }
+
     /// <summary>
     /// Interaction logic for StructureDialog.xaml
     /// </summary>
@@ -27,6 +34,14 @@ namespace BoredBrain {
 
         private string newColumnField;
 
+        private List<StructureFieldDefinition> FieldDefinitions = new List<StructureFieldDefinition>();
+
+        public List<string> TypeList = new List<string>() {
+            FieldType.Text.ToString(),
+            FieldType.Number.ToString(),
+            FieldType.Select.ToString()
+        };
+
         public StructureDialog() {
             InitializeComponent();
 
@@ -37,8 +52,6 @@ namespace BoredBrain {
         }
 
         public void Open(Board board, Action OnSaveAction) {
-
-            this.Fields.Children.Clear();
 
             this.onSaveAction = OnSaveAction;
             this.board = board;
@@ -54,19 +67,24 @@ namespace BoredBrain {
             for (int i = 0; i < this.board.Structure.Fields.Count; i++) {
                 Field currentField = this.board.Structure.Fields[i];
 
-                FieldDefinition fieldDefinition = new FieldDefinition() {
-                    name = currentField.Name,
-                    type = currentField.Type.ToString(),
-                    possibleValues = new List<string>()
-                };
+                this.FieldDefinitions.Add(new StructureFieldDefinition() {
+                    Name = currentField.Name,
+                    Type = currentField.Type.ToString()
+                });
 
-                if(currentField.Type == FieldType.Select) {
-                    SelectField selectField = currentField as SelectField;
+                //FieldDefinition fieldDefinition = new FieldDefinition() {
+                //    name = currentField.Name,
+                //    type = currentField.Type.ToString(),
+                //    possibleValues = new List<string>()
+                //};
 
-                    fieldDefinition.possibleValues = new List<string>(selectField.PossibleValues);
-                }
+                //if(currentField.Type == FieldType.Select) {
+                //    SelectField selectField = currentField as SelectField;
 
-                this.CreateField(fieldDefinition);
+                //    fieldDefinition.possibleValues = new List<string>(selectField.PossibleValues);
+                //}
+
+                //this.CreateField(fieldDefinition);
             }
             
         }
@@ -75,7 +93,7 @@ namespace BoredBrain {
             StructureField newField = new StructureField(definition);
 
             this.fields.Add(newField);
-            this.Fields.Children.Add(newField);
+            //this.Fields.Children.Add(newField);
 
             newField.OnDelete += this.OnDeleteField;
             newField.OnSetColumn += this.OnSetAsColumnField;
@@ -92,14 +110,12 @@ namespace BoredBrain {
 
                     Field newField = FieldFactory.CreateField(type);
                     newField.Name = field.Definition.name;
-                    
-                    if(newField is SelectField) {
-                        (newField as SelectField).PossibleValues = field.Definition.possibleValues;
-                    }
+                    newField.PossibleValues = field.Definition.possibleValues;
 
                     this.board.Structure.AddField(newField);
-                }else if(existingField is SelectField) {
-                    (existingField as SelectField).PossibleValues = field.Definition.possibleValues;
+                }
+                else {
+                    existingField.PossibleValues = field.Definition.possibleValues;
                 }
             }
 
@@ -128,10 +144,10 @@ namespace BoredBrain {
         }
 
         private void OnDeleteField(StructureField field) {
-            this.fields.Remove(field);
-            this.Fields.Children.Remove(field);
-            field.OnDelete -= this.OnDeleteField;
-            field.OnSetColumn -= this.OnSetAsColumnField;
+            //this.fields.Remove(field);
+            //this.Fields.Children.Remove(field);
+            //field.OnDelete -= this.OnDeleteField;
+            //field.OnSetColumn -= this.OnSetAsColumnField;
         }
 
         private void OnSetAsColumnField(StructureField field) {

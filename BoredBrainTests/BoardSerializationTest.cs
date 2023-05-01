@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using BoredBrain;
+using BoredBrain.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BoredBrainTests {
@@ -39,14 +40,14 @@ namespace BoredBrainTests {
 
             b.AddCard(newCard);
 
-            b.Save();
+            BoardSerializer.Save(b);
 
             Board b2 = new Board("TestFolder");
-            b2.Load();
-            b2.Save();
+            BoardSerializer.Load(b2);
+            BoardSerializer.Save(b2);
 
             Board b3 = new Board("TestFolder");
-            b3.Load();
+            BoardSerializer.Load(b3);
 
             Assert.AreEqual(b.Structure.Fields.Count, b2.Structure.Fields.Count);
             Assert.AreEqual(b.Cards.Count, b2.Cards.Count);
@@ -77,14 +78,14 @@ namespace BoredBrainTests {
             newCard.SetFieldValue(test1, "TestValue");
 
             b.AddCard(newCard);
-            b.Save();
+            BoardSerializer.Save(b);
 
             test1.Name = "RenamedField";
 
             Board b2 = new Board("TestFolder");
-            b2.Load();
-            
-            Assert.AreEqual(test1.SerializeValue(b.Cards[0].GetFieldValue(test1)), "TestValue");
+            BoardSerializer.Load(b2);
+
+            Assert.AreEqual(test1.ConvertValueToString(b.Cards[0].GetFieldValue(test1)), "TestValue");
         }
     }
 }

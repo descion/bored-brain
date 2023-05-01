@@ -12,8 +12,17 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Name="Title" FontSize="18" HorizontalContentAlignment="Center" Foreground="White"></Label>
-            <StackPanel Orientation="Vertical" Name="Cards" Grid.Row="1"></StackPanel>
+            <Border>
+                <Border.Background>
+                    <SolidColorBrush Color="#1a1a1a"></SolidColorBrush>
+                </Border.Background>
+                <Label Name="Title" FontSize="18" HorizontalContentAlignment="Center" Foreground="White" Margin="0,10,0,10">Test</Label>
+            </Border>
+            <StackPanel Orientation="Vertical" Name="Cards" Grid.Row="1">
+                <StackPanel.Background>
+                    <SolidColorBrush Color="#202020"></SolidColorBrush>
+                </StackPanel.Background>
+            </StackPanel>
     </Grid>
     </Border>
 </UserControl>
