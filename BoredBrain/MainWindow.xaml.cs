@@ -1,19 +1,9 @@
-﻿using BoredBrain;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Forms;
+
 
 namespace BoredBrain {
     /// <summary>
@@ -28,22 +18,20 @@ namespace BoredBrain {
         public MainWindow() {
             InitializeComponent();
 
-            this.InitializeBoard();
+            this.InitializeBoard("SavedBoard");
             
-            this.ConstructBoard();
         }
 
-        private void InitializeBoard() {
+        //---------------------------------------------------------------------------
 
-            //this.board = this.CreateTestboard();
-            //this.board = this.UseTestBoard();
+        private void InitializeBoard(string path) {
+            if(this.board != null) {
+                this.board.OnBoardChanged -= this.OnBoardChanged;
+            }
 
-            string boardPath = "SavedBoard";
-
-            if (!Directory.Exists(boardPath)) {
-                Directory.CreateDirectory(boardPath);
-
-                Board templateBoard = new Board(boardPath);
+            if (!File.Exists(Path.Combine(path, ".bbb"))) {
+                
+                Board templateBoard = new Board(path);
                 SimpleSelectField statusField = new SimpleSelectField() {
                     Name = "Status"
                 };
@@ -54,23 +42,25 @@ namespace BoredBrain {
                 templateBoard.Save();
             }
 
-            this.board = new Board(boardPath);
+            this.board = new Board(path);
             this.board.Load();
 
             this.board.OnBoardChanged += this.OnBoardChanged;
+            this.ConstructBoard();
         }
 
-        private void Clear() {
-            this.MainPanel.Children.Clear();
-        }
+        //---------------------------------------------------------------------------
 
         private void ConstructBoard() {
+            this.MainPanel.Children.Clear();
             SelectField columnField = (SelectField)this.board.ColumnField;
 
             for (int i = 0; i < columnField.PossibleValues.Count; i++) {
                 this.CreateColumn(columnField, columnField.PossibleValues[i]);
             }
         }
+
+        //---------------------------------------------------------------------------
 
         private Column CreateColumn(Field field, string fieldValue) {
             Column c1 = new Column(field, fieldValue);
@@ -87,74 +77,14 @@ namespace BoredBrain {
             return c1;
         }
 
+        //---------------------------------------------------------------------------
+
         private void OnBoardChanged() {
             this.board.Save();
-            this.Clear();
             this.ConstructBoard();
         }
 
-        private Board CreateTestboard() {
-            if (Directory.Exists("TestFolder")) {
-                Directory.Delete("TestFolder", true);
-            }
-
-            Directory.CreateDirectory("TestFolder");
-
-            Board b = new Board("TestFolder");
-
-            Field test1 = new TextField() {
-                Name = "FirstTestField"
-            };
-
-            b.Structure.AddField(test1);
-
-            Field test2 = new MultiselectField() {
-                Name = "SecondTestField"
-            };
-
-            b.Structure.AddField(test2);
-
-            SimpleSelectField test3 = new SimpleSelectField() {
-                Name = "Status"
-            };
-
-            test3.PossibleValues.Add("ToDo");
-            test3.PossibleValues.Add("In Progress");
-            test3.PossibleValues.Add("Too Tired");
-            test3.PossibleValues.Add("Done");
-
-            b.Structure.AddField(test3);
-            b.ColumnField = test3;
-
-            Card newCard = b.CreateCard();
-
-            newCard.Title = "Grundstruktur für eigene Board-Anwendung bauen";
-            newCard.Content = "Main content Stuff with all the nice things that you need!\n[] Done!";
-
-            newCard.SetFieldValue(test1, "This is my field1 value.");
-            newCard.SetFieldValue(test2, new string[] { "Tag1", "Tag2", "Tag3" });
-            newCard.SetFieldValue(test3, test3.PossibleValues[0]);
-
-            Card newCard2 = b.CreateCard();
-
-            newCard2.Title = "Alles fertig machen";
-            newCard2.SetFieldValue(test3, test3.PossibleValues[0]);
-
-            b.AddCard(newCard);
-            b.AddCard(newCard2);
-
-            b.Save();
-
-            return b;
-        }
-
-        private Board UseTestBoard() {
-            Board b = new Board("TestFolder");
-
-            b.Load();
-
-            return b;
-        }
+        //---------------------------------------------------------------------------
 
         private void CreateColumn_Click(object sender, RoutedEventArgs e) {
 
@@ -169,6 +99,55 @@ namespace BoredBrain {
             this.Dialog.Open("Create Column", "Create", inputs, this.OnCreateColumn);
         }
 
+        //---------------------------------------------------------------------------
+
+        private void CreateCard_Click(object sender, RoutedEventArgs e) {
+            this.Dialog.Open("Create Card", "Create", this.GetInputDefinitionsForCard(), this.OnCreateCard);
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void CreateBoard_Click(object sender, RoutedEventArgs e) {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog()) {
+
+                folderDialog.ShowDialog();
+                string boardPath = folderDialog.SelectedPath;
+
+                this.InitializeBoard(boardPath);
+            }
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void OpenBoard_Click(object sender, RoutedEventArgs e) {
+            using (OpenFileDialog openDialog = new OpenFileDialog()) {
+                openDialog.Filter = "Bored Brain Board Files (*.bbb)|*.bbb";
+                if (openDialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel) {
+                    this.InitializeBoard(new FileInfo(openDialog.FileName).DirectoryName);
+                }
+            }
+
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void OnCreateCard(List<InputDefinition> fields) {
+
+            Card newCard = this.board.CreateCard();
+
+            this.ApplyValuesToCard(newCard, fields);
+
+            this.board.AddCard(newCard);
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void OnSaveCard(List<InputDefinition> fields) {
+            this.ApplyValuesToCard(this.cardInEditMode, fields);
+        }
+
+        //---------------------------------------------------------------------------
+
         private void OnCreateColumn(List<InputDefinition> fields) {
             string newColumn = (string)fields[0].value;
 
@@ -177,14 +156,14 @@ namespace BoredBrain {
             this.OnBoardChanged();
         }
 
-        private void CreateCard_Click(object sender, RoutedEventArgs e) {
-            this.Dialog.Open("Create Card", "Create", this.GetInputDefinitionsForCard(), this.OnCreateCard);
-        }
+        //---------------------------------------------------------------------------
 
         private void EditCard(Card card) {
             this.cardInEditMode = card;
             this.Dialog.Open("Edit Card", "Save", this.GetInputDefinitionsForCard(card), this.OnSaveCard);
         }
+
+        //---------------------------------------------------------------------------
 
         private List<InputDefinition> GetInputDefinitionsForCard(Card c = null) {
             List<InputDefinition> inputs = new List<InputDefinition>() {
@@ -253,18 +232,7 @@ namespace BoredBrain {
             return inputs;
         }
 
-        private void OnCreateCard(List<InputDefinition> fields) {
-
-            Card newCard = this.board.CreateCard();
-
-            this.ApplyValuesToCard(newCard, fields);
-
-            this.board.AddCard(newCard);
-        }
-
-        private void OnSaveCard(List<InputDefinition> fields) {
-            this.ApplyValuesToCard(this.cardInEditMode, fields);
-        }
+        //---------------------------------------------------------------------------
 
         private void ApplyValuesToCard(Card card, List<InputDefinition> fields) {
             InputDefinition titleInput = fields.Find((InputDefinition d) => { return d.name == "Title"; });
@@ -278,6 +246,12 @@ namespace BoredBrain {
             for (int i = 0; i < fields.Count; i++) {
                 card.SetFieldValue(this.board.Structure.GetFieldByName(fields[i].name), fields[i].value);
             }
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void EditStructure_Click(object sender, RoutedEventArgs e) {
+            this.StructureDialog.Open(this.board, this.OnBoardChanged);
         }
     }
 }

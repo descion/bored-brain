@@ -5,7 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BoredBrain"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" MouseMove="Card_MouseMove" MouseUp="Card_MouseUp" Margin="10">
+             d:DesignHeight="450" d:DesignWidth="800" 
+             MouseMove="Card_MouseMove" 
+             MouseUp="Card_MouseUp" 
+             Margin="10">
     <Border BorderBrush="Gray" BorderThickness="1">
         <Grid Height="auto" HorizontalAlignment="Stretch">
             <Grid.Background>

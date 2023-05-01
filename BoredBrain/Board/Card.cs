@@ -38,7 +38,11 @@ namespace BoredBrain {
         }
 
         public object GetFieldValue(Field field) {
-            return this.Fields[field];
+            if (this.Fields.ContainsKey(field)) {
+                return this.Fields[field];
+            }
+
+            return field.GetDefault();
         }
 
         public string Serialize() {
@@ -50,12 +54,13 @@ namespace BoredBrain {
             for (int i = 0; i < this.structure.Fields.Count; i++) {
                 Field currentField = this.structure.Fields[i];
 
-                string fieldValue = "";
+                object currentFieldValue = currentField.GetDefault();
 
                 if (this.Fields.ContainsKey(currentField)) {
-                    fieldValue = currentField.SerializeValue(this.Fields[currentField]);
+                    currentFieldValue = this.Fields[currentField];
                 }
 
+                string fieldValue = currentField.SerializeValue(currentFieldValue);
                 cardContent.AppendLine(currentField.Name + ":" + fieldValue);
             }
 

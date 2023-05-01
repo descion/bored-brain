@@ -19,10 +19,14 @@
             <Menu.Background>
                 <SolidColorBrush Color="#1a1a1a"/>
             </Menu.Background>
-            <MenuItem Header="_Create">
-                <MenuItem Header="_Card" Click="CreateCard_Click"></MenuItem>
-                <MenuItem Header="_Column" Click="CreateColumn_Click"></MenuItem>
+            <MenuItem Header="_Board">
+                <MenuItem Header="_Create Board" Click="CreateBoard_Click"></MenuItem>
+                <MenuItem Header="_Open Board" Click="OpenBoard_Click"></MenuItem>
+                <MenuItem Header="_Edit Structure" Click="EditStructure_Click"></MenuItem>
             </MenuItem>
+            
+            <MenuItem Header="_Create Column" Click="CreateColumn_Click"></MenuItem>
+            <MenuItem Header="_Create Card" Click="CreateCard_Click"></MenuItem>
         </Menu>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
             <Grid>
@@ -35,6 +39,7 @@
                 </StackPanel>
                 
                 <local:CreateDialog Visibility="Hidden" x:Name="Dialog"></local:CreateDialog>
+                <local:StructureDialog Visibility="Hidden" x:Name="StructureDialog"></local:StructureDialog>
             </Grid>
         </ScrollViewer>
     </DockPanel>

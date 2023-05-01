@@ -41,6 +41,8 @@ namespace BoredBrain {
 
         public abstract object DeserializeValue(string valueString);
 
+        public abstract object GetDefault();
+
     }
 
     public class TextField : Field {
@@ -50,8 +52,28 @@ namespace BoredBrain {
             return valueString;
         }
 
+        public override object GetDefault() {
+            return string.Empty;
+        }
+
         public override string SerializeValue(object value) {
             return (string)value;
+        }
+    }
+
+    public class NumberField : Field {
+        public override FieldType Type => FieldType.Number;
+
+        public override object DeserializeValue(string valueString) {
+            return int.Parse(valueString);
+        }
+
+        public override object GetDefault() {
+            return 0;
+        }
+
+        public override string SerializeValue(object value) {
+            return value.ToString();
         }
     }
 
@@ -59,7 +81,7 @@ namespace BoredBrain {
 
         private const char VALUE_SEPARATOR = ';';
         
-        public List<string> PossibleValues { get; protected set; }
+        public List<string> PossibleValues { get; set; }
 
         public SelectField() {
             this.PossibleValues = new List<string>();
@@ -92,6 +114,10 @@ namespace BoredBrain {
             return valueString.Split(new char[] { SERIALIZATION_SEPARATOR }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        public override object GetDefault() {
+            return new string[0];
+        }
+
         public override string SerializeValue(object value) {
             string[] valueArray = (string[])value;
 
@@ -112,6 +138,14 @@ namespace BoredBrain {
             return valueString;
         }
 
+        public override object GetDefault() {
+            if(this.PossibleValues.Count > 0) {
+                return this.PossibleValues[0];
+            }
+
+            return string.Empty;
+        }
+
         public override string SerializeValue(object value) {
             return (string)value;
         }
@@ -122,6 +156,17 @@ namespace BoredBrain {
             string[] contents = fieldDefinition.Split(new string[] { ":::" }, StringSplitOptions.None);
 
             FieldType type = (FieldType)Enum.Parse(typeof(FieldType), contents[0]);
+            Field f = CreateField(type);
+
+            if(f != null) {
+                f.Deserialize(fieldDefinition);
+            }
+
+            return f;
+        }
+
+        public static Field CreateField(FieldType type) {
+            
             Field f = null;
 
             switch (type) {
@@ -129,15 +174,14 @@ namespace BoredBrain {
                     f = new TextField();
                     break;
                 case FieldType.Multiselect:
-                    f =  new MultiselectField();
+                    f = new MultiselectField();
                     break;
                 case FieldType.Select:
                     f = new SimpleSelectField();
                     break;
-            }
-
-            if(f != null) {
-                f.Deserialize(fieldDefinition);
+                case FieldType.Number:
+                    f = new NumberField();
+                    break;
             }
 
             return f;
