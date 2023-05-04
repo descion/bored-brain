@@ -22,5 +22,13 @@
             return string.Empty;
         }
 
+        public override object Validate(object value) {
+            if (this.PossibleValues.Count > 0 && !this.PossibleValues.Contains((string)value)) {
+                return this.PossibleValues[0];
+            }
+
+            return value;
+        }
+
     }
 }

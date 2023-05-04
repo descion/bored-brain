@@ -26,5 +26,9 @@ namespace BoredBrain.Models {
 
             return valueStringBuilder.ToString();
         }
+
+        public override object Validate(object value) {
+            return value;
+        }
     }
 }

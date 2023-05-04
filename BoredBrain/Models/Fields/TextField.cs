@@ -13,5 +13,9 @@
         public override string ConvertValueToString(object value) {
             return (string)value;
         }
+
+        public override object Validate(object value) {
+            return value;
+        }
     }
 }

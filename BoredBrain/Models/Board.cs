@@ -13,6 +13,8 @@ namespace BoredBrain.Models {
 
         public static void Save(Board board) {
 
+            board.Validate();
+
             if (!Directory.Exists(board.Path)) {
                 Directory.CreateDirectory(board.Path);
             }
@@ -74,6 +76,8 @@ namespace BoredBrain.Models {
 
         public List<Card> Cards { get; private set; }
 
+        public List<Card> ArchivedCards { get; private set; }
+
         //---------------------------------------------------------------------------
 
         public delegate void OnBoardChangedDelegate();
@@ -112,6 +116,13 @@ namespace BoredBrain.Models {
 
         //---------------------------------------------------------------------------
 
+        public void RemoveCard(Card card) {
+            this.Cards.Remove(card);
+            this.ArchivedCards.Add(card);
+        }
+
+        //---------------------------------------------------------------------------
+
         private void OnCardChanged(Card c) {
             this.OnBoardChanged?.Invoke();
         }
@@ -124,6 +135,14 @@ namespace BoredBrain.Models {
                     return c.GetFieldValue(field).Equals(value); 
                 }
             );
+        }
+
+        //---------------------------------------------------------------------------
+
+        public void Validate() {
+            for (int itCards = 0; itCards < this.Cards.Count; itCards++) {
+                this.Cards[itCards].Validate();
+            }
         }
     }
 }

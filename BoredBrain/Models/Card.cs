@@ -51,5 +51,18 @@ namespace BoredBrain.Models {
 
             return field.GetDefaultValue();
         }
+
+        //---------------------------------------------------------------------------
+
+        public void Validate() {
+
+            Dictionary<Field, object> validatedFields = new Dictionary<Field, object>();
+
+            foreach (KeyValuePair<Field, object> fieldValue in this.Fields) {
+                validatedFields[fieldValue.Key] = fieldValue.Key.Validate(fieldValue.Value);
+            }
+
+            this.Fields = validatedFields;
+        }
     }
 }

@@ -21,5 +21,7 @@ namespace BoredBrain.Models {
 
         public abstract object GetDefaultValue();
 
+        public abstract object Validate(object value);
+
     }
 }

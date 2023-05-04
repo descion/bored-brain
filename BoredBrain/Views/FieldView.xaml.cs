@@ -1,4 +1,5 @@
 ﻿using BoredBrain.ViewModels;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace BoredBrain.Views {
             definition.PossibleValues.Add(this.NewPossibleValue.Text);
 
             this.NewPossibleValue.Text = "";
+        }
+
+        private void PossibleValue_DeleteClick(object sender, RoutedEventArgs e) {
+            Chip possibleValueSender = (Chip)sender;
+            FieldDefinition definition = (FieldDefinition)this.DataContext;
+
+            definition.PossibleValues.Remove(possibleValueSender.Content as string);
         }
     }
 }
