@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace BoredBrain.Models {
@@ -35,8 +36,18 @@ namespace BoredBrain.Models {
             return valueStringBuilder.ToString();
         }
 
+        //---------------------------------------------------------------------------
+
         public override object Validate(object value) {
-            return value;
+            List<string> valueList = new List<string>((string[])value);
+
+            for (int i = valueList.Count-1; i >= 0; i--) {
+                if (!this.PossibleValues.Contains(valueList[i])) {
+                    valueList.RemoveAt(i);
+                }
+            }
+
+            return valueList.ToArray();
         }
     }
 }

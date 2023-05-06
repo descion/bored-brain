@@ -109,6 +109,7 @@
     <Compile Include="ViewModels\ColumnViewModel.cs" />
     <Compile Include="ViewModels\EditCardViewModel.cs" />
     <Compile Include="ViewModels\FieldDefinition.cs" />
+    <Compile Include="ViewModels\MultiselectViewModel.cs" />
     <Compile Include="ViewModels\StructureViewModel.cs" />
     <Compile Include="Views\AddColumnView.xaml.cs">
       <DependentUpon>AddColumnView.xaml</DependentUpon>
@@ -139,6 +140,9 @@
     </Compile>
     <Compile Include="Views\Previews\FieldPreview.xaml.cs">
       <DependentUpon>FieldPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Previews\MultiselectPreview.xaml.cs">
+      <DependentUpon>MultiselectPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Previews\NumberFieldPreview.xaml.cs">
       <DependentUpon>NumberFieldPreview.xaml</DependentUpon>
@@ -242,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Previews\FieldPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Previews\MultiselectPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

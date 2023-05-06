@@ -72,6 +72,7 @@
                                 <ComboBoxItem IsSelected="True">Text</ComboBoxItem>
                                 <ComboBoxItem>Number</ComboBoxItem>
                                 <ComboBoxItem>Select</ComboBoxItem>
+                                <ComboBoxItem>Multiselect</ComboBoxItem>
                             </ComboBox>
                             <Button Grid.Column="2" Margin="10" Click="Add_Click">Add</Button>
                         </Grid>

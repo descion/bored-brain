@@ -42,6 +42,9 @@ namespace BoredBrain.Views.Inputs {
                     selectInput.DataContext = this.definition;
                     break;
                 case "Multiselect":
+                    MultiselectViewModel multiselectViewModel = new MultiselectViewModel(this.definition);
+                    MultiselectInput multiselectInput = new MultiselectInput(multiselectViewModel);
+                    this.Main.Children.Add(multiselectInput);
                     break;
                 default:
                     break;

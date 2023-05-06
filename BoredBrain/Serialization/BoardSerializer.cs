@@ -26,6 +26,9 @@ namespace BoredBrain.Serialization {
         //---------------------------------------------------------------------------
 
         public static void Save(Board board) {
+
+            board.Validate();
+
             BoardJSON boardJson = new BoardJSON() {
                 ID = board.Id.ToString(),
                 ColumnField = board.ColumnField?.Name,

@@ -18,7 +18,7 @@ namespace BoredBrain.ViewModels {
 
         public Visibility PossibleValuesVisiblity { 
             get {
-                return this.Type == "Select" ? Visibility.Visible : Visibility.Collapsed;
+                return this.Type == "Select" || this.Type == "Multiselect" ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
