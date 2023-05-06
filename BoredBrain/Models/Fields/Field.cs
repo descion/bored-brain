@@ -11,6 +11,8 @@ namespace BoredBrain.Models {
 
         public List<string> PossibleValues { get; set; }
 
+        public bool ShowOnCard { get; set; }
+
         public Field() {
             this.PossibleValues = new List<string>();
         }

@@ -25,6 +25,12 @@ namespace BoredBrain.Models {
 
         //---------------------------------------------------------------------------
 
+        public void RemoveField(Field f) {
+            this.Fields.Remove(f);
+        }
+
+        //---------------------------------------------------------------------------
+
         public Field GetFieldByName(string name) {
             return this.Fields.Find((Field f) => { return f.Name == name; });
         }

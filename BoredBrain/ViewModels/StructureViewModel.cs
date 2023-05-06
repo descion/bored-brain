@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace BoredBrain.ViewModels {
     public class StructureViewModel {
-        public ObservableCollection<FieldDefinitionWrapper> Fields { get; set; }
+        public ObservableCollection<FieldDefinition> Fields { get; set; }
 
         private Structure structure;
 
-        public StructureViewModel(Structure structure) {
-            this.structure = structure;
+        public StructureViewModel(Board board) {
+            this.structure = board.Structure;
 
-            this.Fields = new ObservableCollection<FieldDefinitionWrapper>();
+            this.Fields = new ObservableCollection<FieldDefinition>();
 
             for (int itFields = 0; itFields < structure.Fields.Count; itFields++) {
                 Field currentField = structure.Fields[itFields];
@@ -23,26 +23,51 @@ namespace BoredBrain.ViewModels {
                 FieldDefinition definition = new FieldDefinition() {
                     Name = currentField.Name,
                     Type = currentField.Type.ToString(),
-                    PossibleValues = new ObservableCollection<string>(currentField.PossibleValues)
+                    PossibleValues = new ObservableCollection<string>(currentField.PossibleValues),
+                    ShowOnCard = currentField.ShowOnCard,
                 };
 
-                this.Fields.Add(new FieldDefinitionWrapper() { Definition = definition });
+                if(currentField != board.ColumnField && currentField != board.CategoryField) {
+                    definition.Delete = this.DeleteField;
+                }
+
+                this.Fields.Add(definition);
             }
         }
 
+        public void AddField(FieldDefinition definition) {
+            definition.Delete = this.DeleteField;
+            this.Fields.Add(definition);
+        }
+
+        private void DeleteField(FieldDefinition definition) {
+            this.Fields.Remove(definition);
+        }
+
         public void Apply() {
+
             for (int itFields = 0; itFields < this.Fields.Count; itFields++) {
-                Field existingField = this.structure.Fields.Find((Field f) => { return f.Name == this.Fields[itFields].Definition.Name; });
+                Field existingField = this.structure.Fields.Find((Field f) => { return f.Name == this.Fields[itFields].Name; });
 
                 if(existingField == null) {
-                    Field f = FieldFactory.CreateField((FieldType)Enum.Parse(typeof(FieldType), this.Fields[itFields].Definition.Type));
-                    f.Name = this.Fields[itFields].Definition.Name;
-                    f.PossibleValues = new List<string>(this.Fields[itFields].Definition.PossibleValues);
+                    Field f = FieldFactory.CreateField((FieldType)Enum.Parse(typeof(FieldType), this.Fields[itFields].Type));
+                    f.Name = this.Fields[itFields].Name;
+                    f.PossibleValues = new List<string>(this.Fields[itFields].PossibleValues);
+                    f.ShowOnCard = this.Fields[itFields].ShowOnCard;
 
                     this.structure.AddField(f);
                 }
                 else {
-                    existingField.PossibleValues = new List<string>(this.Fields[itFields].Definition.PossibleValues);
+                    existingField.PossibleValues = new List<string>(this.Fields[itFields].PossibleValues);
+                    existingField.ShowOnCard = this.Fields[itFields].ShowOnCard;
+                }
+            }
+
+            for (int i = 0; i < this.structure.Fields.Count; i++) {
+                bool hasField = this.Fields.Any((FieldDefinition f) => { return f.Name == this.structure.Fields[i].Name; });
+
+                if(!hasField) {
+                    this.structure.RemoveField(this.structure.Fields[i]);
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace BoredBrain {
         private const char VALUE_SEPARATOR = ';';
 
         public static string Serialize(Field field) {
-            return field.Type.ToString() + SERIALIZATION_SEPARATOR + field.Name + SERIALIZATION_SEPARATOR + SerializeValues(field.PossibleValues);
+            return field.Type.ToString() + SERIALIZATION_SEPARATOR + field.Name + SERIALIZATION_SEPARATOR + SerializeValues(field.PossibleValues) + SERIALIZATION_SEPARATOR + field.ShowOnCard;
         }
 
         private static string SerializeValues(List<string> values) {
@@ -30,6 +30,10 @@ namespace BoredBrain {
             Field field = FieldFactory.CreateField(fieldDefinition);
             field.Name = contents[1];
             field.PossibleValues = DeserializeValues(contents[2]);
+
+            if(contents.Length > 3) {
+                field.ShowOnCard = bool.Parse(contents[3]);
+            }
 
             return field;
         }

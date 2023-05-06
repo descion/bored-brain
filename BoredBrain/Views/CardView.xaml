@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BoredBrain.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:BoredBrain.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:local1="clr-namespace:BoredBrain.Views.Previews"
              mc:Ignorable="d" 
              MouseDown="Card_MouseDown"
              MouseMove="Card_MouseMove" 
@@ -30,7 +30,25 @@
             Foreground="White"
             Name="Card"
             Style="{StaticResource MaterialDesignOutlinedCard}">
-            <TextBlock Text="{Binding Card.Title}" TextWrapping="Wrap" />  
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Card.Title}" FontSize="14" TextWrapping="Wrap" />
+                <ItemsControl Grid.Row="1" x:Name="ColumnList" ItemsSource="{Binding PreviewFields}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local1:FieldPreview DataContext="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
         </materialDesign:Card>
     </StackPanel>
 </UserControl>

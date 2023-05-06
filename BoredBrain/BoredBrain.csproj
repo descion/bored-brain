@@ -104,6 +104,18 @@
     <Compile Include="Views\Inputs\InputField.xaml.cs">
       <DependentUpon>InputField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Previews\FieldPreview.xaml.cs">
+      <DependentUpon>FieldPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Previews\NumberFieldPreview.xaml.cs">
+      <DependentUpon>NumberFieldPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Previews\SelectFieldPreview.xaml.cs">
+      <DependentUpon>SelectFieldPreview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Previews\TextFieldPreview.xaml.cs">
+      <DependentUpon>TextFieldPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StructureView.xaml.cs">
       <DependentUpon>StructureView.xaml</DependentUpon>
     </Compile>
@@ -193,6 +205,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Inputs\InputField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Previews\FieldPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Previews\NumberFieldPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Previews\SelectFieldPreview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Previews\TextFieldPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

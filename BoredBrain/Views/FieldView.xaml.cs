@@ -38,5 +38,10 @@ namespace BoredBrain.Views {
 
             definition.PossibleValues.Remove(possibleValueSender.Content as string);
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e) {
+            FieldDefinition definition = (FieldDefinition)this.DataContext;
+            definition.DoDelete();
+        }
     }
 }

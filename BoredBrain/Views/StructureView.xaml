@@ -13,7 +13,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="60px"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="60px"></RowDefinition>
+                <RowDefinition Height="22.243"></RowDefinition>
+                <RowDefinition Height="37.757"/>
             </Grid.RowDefinitions>
             <materialDesign:ColorZone
                 Mode="PrimaryDark" Height="60px">
@@ -32,51 +33,53 @@
                     </Button>
                 </DockPanel>
             </materialDesign:ColorZone>
-            <Grid Background="{DynamicResource MaterialDesignPaper}" Grid.Row="1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <ItemsControl x:Name="FieldList" ItemsSource="{Binding Fields}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:FieldView DataContext="{Binding Definition}"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width=".5*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBox 
+            <ScrollViewer Grid.Row="1" Background="Black">
+                <Grid Background="{DynamicResource MaterialDesignPaper}" Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <ItemsControl x:Name="FieldList" ItemsSource="{Binding Fields}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:FieldView DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                                <ColumnDefinition Width=".5*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox 
                             Name="NewFieldName"
                             Margin="10"
                             materialDesign:HintAssist.Hint="New Field Name"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                        <ComboBox 
+                            <ComboBox 
                             Name="NewFieldType" 
                             Margin="10" 
                             Grid.Column="1"
                             materialDesign:HintAssist.Hint="New Field Type"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                            <ComboBoxItem IsSelected="True">Text</ComboBoxItem>
-                            <ComboBoxItem>Number</ComboBoxItem>
-                            <ComboBoxItem>Select</ComboBoxItem>
-                        </ComboBox>
-                        <Button Grid.Column="2" Margin="10" Click="Add_Click">Add</Button>
+                                <ComboBoxItem IsSelected="True">Text</ComboBoxItem>
+                                <ComboBoxItem>Number</ComboBoxItem>
+                                <ComboBoxItem>Select</ComboBoxItem>
+                            </ComboBox>
+                            <Button Grid.Column="2" Margin="10" Click="Add_Click">Add</Button>
+                        </Grid>
                     </Grid>
-                </Grid>
 
-            </Grid>
-            <Grid Background="{DynamicResource MaterialDesignPaper}" Grid.Row="2">
+                </Grid>
+            </ScrollViewer>
+            <Grid Background="{DynamicResource MaterialDesignPaper}" Grid.Row="2" Grid.RowSpan="2">
                 <Separator VerticalAlignment="Top"></Separator>
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button  HorizontalAlignment="Right" Grid.Row="2" Margin="10,0,10,0" Click="Save_Click">Save</Button>

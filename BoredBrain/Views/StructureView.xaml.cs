@@ -32,7 +32,7 @@ namespace BoredBrain.Views {
             InitializeComponent();
 
             this.board = board;
-            this.structureViewModel = new StructureViewModel(board.Structure);
+            this.structureViewModel = new StructureViewModel(board);
             this.DataContext = structureViewModel;
         }
 
@@ -49,13 +49,13 @@ namespace BoredBrain.Views {
             string fieldName = this.NewFieldName.Text;
             string fieldType = this.NewFieldType.Text;
 
-            this.structureViewModel.Fields.Add(new FieldDefinitionWrapper() {
-                Definition = new FieldDefinition() {
+            this.structureViewModel.AddField(
+                new FieldDefinition() {
                     Name = fieldName,
                     Type = fieldType,
-                    PossibleValues = new ObservableCollection<string>()
+                    PossibleValues = new ObservableCollection<string>(),
                 }
-            });
+            );
 
             this.NewFieldName.Text = "";
             this.NewFieldType.SelectedIndex = 0;
