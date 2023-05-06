@@ -106,7 +106,7 @@
                     <Button  HorizontalAlignment="Right" Margin="10,0,10,0" Click="Save_Click">Save</Button>
                     <Button Style="{StaticResource MaterialDesignPaperButton}" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,10,0" Click="Close_Click">Cancel</Button>
                 </StackPanel>
-                <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}" BorderBrush="Red" HorizontalAlignment="Left" Grid.Column="1" Margin="20,0,10,0" Click="Delete_Click" Background="DarkRed" Foreground="White">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}" BorderBrush="Red" HorizontalAlignment="Left" Grid.Column="1" Margin="20,0,10,0" Click="Delete_Click" Background="DarkRed" Foreground="White" Visibility="{Binding DeleteVisibility}">
                     <materialDesign:PackIcon Kind="Trash"></materialDesign:PackIcon>
                 </Button>
             </Grid>
