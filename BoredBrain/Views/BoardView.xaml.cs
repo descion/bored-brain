@@ -33,7 +33,7 @@ namespace BoredBrain.Views {
                 this.board.OnBoardChanged -= this.OnBoardChanged;
             }
 
-            if (!File.Exists(Path.Combine(path, ".bbb"))) {
+            if (!File.Exists(Path.Combine(path, ".bbb")) && !File.Exists(Path.Combine(path, "board.json"))) {
 
                 Board templateBoard = new Board(path);
                 SimpleSelectField statusField = new SimpleSelectField() {

@@ -2,75 +2,59 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Text.Json;
 
 namespace BoredBrain.Serialization {
     public static class BoardSerializer {
 
-        private const string CARD_LIST = "CARDLIST";
+        private const string BOARD_FILE = "board.json";
+        private const string STRUCTURE_FILE = "structure.json";
+        private const string CARD_FOLDER = "cards";
 
-        public static void Save(Board board) {
-
-            board.Validate();
-
-            if (!Directory.Exists(board.Path)) {
-                Directory.CreateDirectory(board.Path);
-            }
-
-            StringBuilder boardFileContent = new StringBuilder();
-            boardFileContent.AppendLine(board.Id.ToString());
-            boardFileContent.AppendLine(".bbs");
-            boardFileContent.AppendLine(board.ColumnField != null ? board.ColumnField.Name : "");
-            boardFileContent.AppendLine(board.CategoryField != null ? board.CategoryField.Name : "");
-
-            File.WriteAllText(Path.Combine(board.Path, ".bbs"), StructureSerializer.Serialize(board.Structure));            
-
-            List<string> cardOrder = new List<string>();
-            foreach(Card card in board.Cards) {
-                File.WriteAllText(Path.Combine(board.Path, card.Id.ToString() + ".bbc"), CardSerializer.Serialize(card));
-                cardOrder.Add(card.Id.ToString());
-            }
-
-            boardFileContent.AppendLine(CARD_LIST);
-            for (int i = 0; i < cardOrder.Count; i++) {
-                boardFileContent.AppendLine(cardOrder[i]);
-            }
-
-            File.WriteAllText(Path.Combine(board.Path, ".bbb"), boardFileContent.ToString());
+        private class BoardJSON {
+            public string ID { get; set; }
+            public string StructureFilePath { get; set; }
+            public string ColumnField { get; set; }
+            public string CategoryField { get; set; }
+            public List<string> CardOrder { get; set; }
         }
 
-        //---------------------------------------------------------------------------
+        public static void Save(Board board) {
+            BoardJSON boardJson = new BoardJSON() {
+                ID = board.Id.ToString(),
+                ColumnField = board.ColumnField?.Name,
+                CategoryField = board.CategoryField?.Name,
+                CardOrder = new List<string>()
+            };
+
+            Directory.CreateDirectory(board.Path);
+            Directory.CreateDirectory(Path.Combine(board.Path, CARD_FOLDER));
+
+            foreach (Card card in board.Cards) {
+                File.WriteAllText(Path.Combine(board.Path, CARD_FOLDER, card.Id.ToString() + ".json"), CardSerializer.Serialize(card));
+                boardJson.CardOrder.Add(card.Id.ToString());
+            }
+
+            File.WriteAllText(Path.Combine(board.Path, STRUCTURE_FILE), StructureSerializer.Serialize(board.Structure));
+            File.WriteAllText(Path.Combine(board.Path, BOARD_FILE), JsonSerializer.Serialize(boardJson));
+        }
 
         public static void Load(Board board) {
 
-            string boardFile = Directory.GetFiles(board.Path, ".bbb")[0];
+            if(File.Exists(Path.Combine(board.Path, ".bbb"))) {
+                LegacyBoardSerializer.Load(board);
 
-            List<string> cardOrder = new List<string>();
-
-            using (StreamReader boardReader = new StreamReader(boardFile)) {
-                string boardId = boardReader.ReadLine();
-                string structurePath = boardReader.ReadLine();
-
-                Structure boardStructure = StructureSerializer.Deserialize(File.ReadAllText(Path.Combine(board.Path, structurePath)));
-                board.Structure = boardStructure;
-
-                board.ColumnField = board.Structure.GetFieldByName(boardReader.ReadLine());
-                board.CategoryField = board.Structure.GetFieldByName(boardReader.ReadLine());
-
-                board.Id = Guid.Parse(boardId);
-
-                string currentLine = boardReader.ReadLine();
-
-                while(currentLine != null) {
-                    if(currentLine != CARD_LIST) {
-                        cardOrder.Add(currentLine);
-                    }
-
-                    currentLine = boardReader.ReadLine();
-                }           
+                Directory.Delete(board.Path, true);
+                Save(board);
             }
 
-            string[] cardFiles = Directory.GetFiles(board.Path, "*.bbc");
+            BoardJSON boardJson = JsonSerializer.Deserialize<BoardJSON>(File.ReadAllText(Path.Combine(board.Path, BOARD_FILE)));
+            board.Structure  = StructureSerializer.Deserialize(File.ReadAllText(Path.Combine(board.Path, STRUCTURE_FILE)));
+            board.Id = new Guid(boardJson.ID);
+            board.ColumnField = board.Structure.GetFieldByName(boardJson.ColumnField);
+            board.CategoryField = board.Structure.GetFieldByName(boardJson.CategoryField);
+
+            string[] cardFiles = Directory.GetFiles(Path.Combine(board.Path, CARD_FOLDER), "*.json");
 
             Dictionary<string, Card> cards = new Dictionary<string, Card>();
 
@@ -79,10 +63,10 @@ namespace BoredBrain.Serialization {
                 cards.Add(currentCard.Id.ToString(), currentCard);
             }
 
-            for (int i = 0; i < cardOrder.Count; i++) {
-                if (cards.ContainsKey(cardOrder[i])) {
-                    board.AddCard(cards[cardOrder[i]]);
-                    cards.Remove(cardOrder[i]);
+            for (int i = 0; i < boardJson.CardOrder.Count; i++) {
+                if (cards.ContainsKey(boardJson.CardOrder[i])) {
+                    board.AddCard(cards[boardJson.CardOrder[i]]);
+                    cards.Remove(boardJson.CardOrder[i]);
                 }
             }
 

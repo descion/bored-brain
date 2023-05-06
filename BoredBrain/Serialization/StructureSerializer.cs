@@ -1,30 +1,34 @@
 ﻿using BoredBrain.Models;
-using System.IO;
-using System.Text;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace BoredBrain.Serialization {
     public static class StructureSerializer {
-        public static string Serialize(Structure structure) {
-            StringBuilder fieldBuilder = new StringBuilder();
 
-            for (int i = 0; i < structure.Fields.Count; i++) {
-                fieldBuilder.AppendLine(FieldSerializer.Serialize(structure.Fields[i]));
-            }
-
-            return fieldBuilder.ToString();
+        private class StructureJSON {
+            public List<FieldSerializer.FieldJSON> Fields { get; set; }
         }
 
-        public static Structure Deserialize(string structureDefinition) {
+        public static string Serialize(Structure structure) {
+
+            StructureJSON structureJson = new StructureJSON() {
+                Fields = new List<FieldSerializer.FieldJSON>()
+            };
+
+            for (int i = 0; i < structure.Fields.Count; i++) {
+                structureJson.Fields.Add(FieldSerializer.ToJSONType(structure.Fields[i]));
+            }
+
+            return JsonSerializer.Serialize(structureJson);
+        }
+
+        public static Structure Deserialize(string structureJsonString) {
+            StructureJSON structureJson = JsonSerializer.Deserialize<StructureJSON>(structureJsonString);
+
             Structure structure = new Structure();
 
-            using (StringReader definitionReader = new StringReader(structureDefinition)) {
-                string currentLine = definitionReader.ReadLine();
-                while (currentLine != null) {
-                    Field f = FieldSerializer.Deserialize(currentLine);
-                    structure.Fields.Add(f);
-
-                    currentLine = definitionReader.ReadLine();
-                }
+            for (int i = 0; i < structureJson.Fields.Count; i++) {
+                structure.Fields.Add(FieldSerializer.FromJSONType(structureJson.Fields[i]));
             }
 
             return structure;

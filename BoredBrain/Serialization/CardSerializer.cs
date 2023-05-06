@@ -1,18 +1,24 @@
 ﻿using BoredBrain.Models;
 using System;
-using System.IO;
-using System.Text;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace BoredBrain.Serialization {
     public static class CardSerializer {
-
-        private const string CONTENT_START = ":::CONTENTSTART:::";
+        private class CardJSON {
+            public string ID { get; set; }
+            public string Title { get; set; }
+            public string Content { get; set; }
+            public Dictionary<string, string> FieldValues { get; set; }
+        }
 
         public static string Serialize(Card card) {
-            StringBuilder cardContent = new StringBuilder();
-
-            cardContent.AppendLine(card.Id.ToString());
-            cardContent.AppendLine(card.Title);
+            CardJSON cardJson = new CardJSON(){
+                ID = card.Id.ToString(),
+                Title = card.Title,
+                Content = card.Content,
+                FieldValues = new Dictionary<string, string>()
+            };
 
             for (int i = 0; i < card.Structure.Fields.Count; i++) {
                 Field currentField = card.Structure.Fields[i];
@@ -24,43 +30,24 @@ namespace BoredBrain.Serialization {
                 }
 
                 string fieldValue = currentField.ConvertValueToString(currentFieldValue);
-                cardContent.AppendLine(currentField.Name + ":" + fieldValue);
+                cardJson.FieldValues.Add(currentField.Name, fieldValue);
             }
 
-            cardContent.AppendLine(CONTENT_START);
-            cardContent.Append(card.Content);
-
-            return cardContent.ToString();
+            return JsonSerializer.Serialize(cardJson);
         }
 
-        public static Card Deserialize(string cardString, Structure structure) {
-            Card card = new Card(structure);
+        public static Card Deserialize(string cardJsonString, Structure structure) {
+            CardJSON cardJson = JsonSerializer.Deserialize<CardJSON>(cardJsonString);
 
-            using (StringReader contentReader = new StringReader(cardString)) {
+            Card card = new Card(structure) {
+                Id = new Guid(cardJson.ID),
+                Title = cardJson.Title,
+                Content = cardJson.Content
+            };
 
-                card.Id = Guid.Parse(contentReader.ReadLine());
-                card.Title = contentReader.ReadLine();
-
-                string currentLine = contentReader.ReadLine();
-
-                while (currentLine != CONTENT_START) {
-
-                    string fieldName = currentLine.Substring(0, currentLine.IndexOf(':'));
-                    string fieldContent = currentLine.Substring(currentLine.IndexOf(':') + 1);
-
-                    for (int i = 0; i < card.Structure.Fields.Count; i++) {
-                        Field field = card.Structure.Fields[i];
-
-                        if (field.Name == fieldName) {
-                            object fieldValue = field.ConvertStringToValue(fieldContent);
-                            card.Fields.Add(field, fieldValue);
-                        }
-                    }
-
-                    currentLine = contentReader.ReadLine();
-                }
-
-                card.Content = contentReader.ReadToEnd();
+            foreach(KeyValuePair<string, string> fieldValue in cardJson.FieldValues) {
+                Field field = structure.GetFieldByName(fieldValue.Key);
+                card.Fields.Add(field, field.ConvertStringToValue(fieldValue.Value));
             }
 
             return card;

@@ -1,47 +1,39 @@
 ﻿using BoredBrain.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BoredBrain {
     public static class FieldSerializer {
 
-        private const string SERIALIZATION_SEPARATOR = ":::";
-        private const char VALUE_SEPARATOR = ';';
+        public class FieldJSON {
 
-        public static string Serialize(Field field) {
-            return field.Type.ToString() + SERIALIZATION_SEPARATOR + field.Name + SERIALIZATION_SEPARATOR + SerializeValues(field.PossibleValues) + SERIALIZATION_SEPARATOR + field.ShowOnCard;
+            public string Type { get; set; }
+
+            public string Name { get; set; }
+
+            public List<string> PossibleValues { get; set; }
+
+            public bool ShowOnCard { get; set; }
         }
 
-        private static string SerializeValues(List<string> values) {
-            StringBuilder dataBuilder = new StringBuilder();
+        public static FieldJSON ToJSONType(Field field) {
 
-            for (int i = 0; i < values.Count; i++) {
-                dataBuilder.Append(values[i]);
-                dataBuilder.Append(VALUE_SEPARATOR);
-            }
-
-            return dataBuilder.ToString();
+            return new FieldJSON() {
+                Type = field.Type.ToString(),
+                Name = field.Name,
+                PossibleValues = field.PossibleValues,
+                ShowOnCard = field.ShowOnCard
+            };
         }
 
-        public static Field Deserialize(string fieldDefinition) {
-            string[] contents = fieldDefinition.Split(new string[] { SERIALIZATION_SEPARATOR }, StringSplitOptions.None);
+        public static Field FromJSONType(FieldJSON fieldJson) {
+            Field field = FieldFactory.CreateField((FieldType)Enum.Parse(typeof(FieldType), fieldJson.Type));
 
-            Field field = FieldFactory.CreateField(fieldDefinition);
-            field.Name = contents[1];
-            field.PossibleValues = DeserializeValues(contents[2]);
-
-            if(contents.Length > 3) {
-                field.ShowOnCard = bool.Parse(contents[3]);
-            }
+            field.Name = fieldJson.Name;
+            field.PossibleValues = fieldJson.PossibleValues;
+            field.ShowOnCard = fieldJson.ShowOnCard;
 
             return field;
-        }
-
-        private static List<string> DeserializeValues(string valueString) { 
-            string[] splitData = valueString.Split(new char[] { VALUE_SEPARATOR }, StringSplitOptions.RemoveEmptyEntries);
-
-            return new List<string>(splitData);
         }
     }
 }
