@@ -19,13 +19,26 @@ namespace BoredBrain.ViewModels {
         public ObservableCollection<CategoryViewModel> Categories { get; set; }
 
         private ObservableCollection<string> selectFields;
-        public ObservableCollection<string> SelectFields { get {
+        public ObservableCollection<string> SelectFields { 
+            get {
                 return this.selectFields;
             }
             set {
                 this.selectFields = value;
 
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectFields"));
+            }
+        }
+
+        private ObservableCollection<string> columnValues;
+        public ObservableCollection<string> ColumnValues {
+            get {
+                return this.columnValues;
+            }
+            set {
+                this.columnValues = value;
+
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ColumnValues"));
             }
         }
 
@@ -45,6 +58,8 @@ namespace BoredBrain.ViewModels {
 
             this.ColumnField = board.ColumnField.Name;
             this.CategoryField = board.CategoryField?.Name;
+
+            this.ColumnValues = new ObservableCollection<string>(board.ColumnField.PossibleValues);
 
             if (board.CategoryField != null) {
                 for (int i = 0; i < board.CategoryField.PossibleValues.Count; i++) {

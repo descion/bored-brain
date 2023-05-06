@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BoredBrain.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             AllowDrop="True"
+             Drop="Board_Drop">
     <Grid Name="MainPanel">
         <DockPanel>
             <materialDesign:ColorZone
@@ -26,7 +28,7 @@
                 </Grid.RowDefinitions>
                 <Border Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black" Background="#252525">
                 <StackPanel Margin="10" Orientation="Horizontal">
-                    <Button Margin="10,0,0,10" Height="50" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignPaperButton}" FontSize="16" Content="Create Card" Click="CreateCard_Click"></Button>
+                    <Button Margin="10,0,0,10" Height="50" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignRaisedButton}" FontSize="16" Content="Create Card" Click="CreateCard_Click"></Button>
                     <Button Margin="20,0,0,10" Height="50" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignPaperButton}" FontSize="16" Content="Create Column" Click="CreateColumn_Click"></Button>
                     
                     <ComboBox 
@@ -50,19 +52,42 @@
                     </StackPanel>
                 </Border>
                 <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Categories}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <local:CategoryView DataContext="{Binding}"></local:CategoryView>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
 
-                    </ItemsControl>
+                        </Grid.RowDefinitions>
+                        
+                        <ItemsControl x:Name="ColumnHeader" VerticalAlignment="Stretch" ItemsSource="{Binding ColumnValues}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="300px" Margin="10,10,0,5" Padding="5" Background="{DynamicResource PrimaryHueDarkBrush}" CornerRadius="5,5,0,0">
+                                        <TextBlock Text="{Binding}"></TextBlock>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <ItemsControl x:Name="ColumnList" Grid.Row="1" VerticalAlignment="Stretch" ItemsSource="{Binding Categories}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel VerticalAlignment="Stretch"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:CategoryView DataContext="{Binding}"></local:CategoryView>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+                    </Grid>
                 </ScrollViewer>
             </Grid>
         </DockPanel>

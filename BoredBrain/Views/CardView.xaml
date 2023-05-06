@@ -25,7 +25,7 @@
     <StackPanel Name="CardContainer">
         <materialDesign:Card
             Width="auto"
-            Padding="8"
+            Padding="5"
             Background="#252525"
             Foreground="White"
             Name="Card"

@@ -15,7 +15,7 @@
     </UserControl.Resources>
     <materialDesign:Card
         Width="auto"
-        Padding="8"
+        Padding="5"
         Background="#303030"
         Foreground="Gray"
         Style="{StaticResource MaterialDesignOutlinedCard}">

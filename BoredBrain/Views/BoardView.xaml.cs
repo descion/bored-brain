@@ -162,5 +162,9 @@ namespace BoredBrain.Views {
             this.CategoryField.SelectedIndex = -1;
             this.OnBoardChanged();
         }
+
+        private void Board_Drop(object sender, DragEventArgs e) {
+            this.OnBoardChanged();
+        }
     }
 }

@@ -12,8 +12,8 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="1*" MinHeight="200"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border AllowDrop="true" Drop="Category_Drop" Margin="10,0,10,0" Background="#202020" BorderBrush="Gray" BorderThickness="1" Visibility="{Binding CategoryHeadlineVisibility}">
-            <TextBlock Text="{Binding CategoryValue}" Margin="10"></TextBlock>
+        <Border AllowDrop="true" Drop="Category_Drop" Margin="5,0,10,0" Background="#202020" BorderBrush="Gray" Visibility="{Binding CategoryHeadlineVisibility}" CornerRadius="5">
+            <TextBlock Text="{Binding CategoryValue}" Margin="5"></TextBlock>
         </Border>
         
         <ItemsControl x:Name="ColumnList" Grid.Row="1" ItemsSource="{Binding Columns}">
