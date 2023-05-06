@@ -20,19 +20,11 @@
             Header="{Binding Headline}">
             <GroupBox.HeaderTemplate>
                 <DataTemplate>
-                    <StackPanel
-                         Orientation="Horizontal">
-                        <materialDesign:PackIcon
-                            Width="32"
-                            Height="32"
+                    <TextBlock
+                            Margin="8,0,0,0"
                             VerticalAlignment="Center"
-                            Kind="TableColumn" />
-                        <TextBlock
-                              Margin="8,0,0,0"
-                              VerticalAlignment="Center"
-                              Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
-                              Text="{Binding}" />       
-                    </StackPanel>
+                            Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                            Text="{Binding}" />       
                 </DataTemplate>
             </GroupBox.HeaderTemplate>
             <StackPanel Name="CardContainer">

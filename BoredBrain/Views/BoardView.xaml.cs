@@ -156,5 +156,11 @@ namespace BoredBrain.Views {
             this.board.CategoryField = this.board.Structure.GetFieldByName(this.boardVM.CategoryField);
             this.OnBoardChanged();
         }
+
+        private void ClearCategory_Click(object sender, RoutedEventArgs e) {
+            this.board.CategoryField = null;
+            this.CategoryField.SelectedIndex = -1;
+            this.OnBoardChanged();
+        }
     }
 }

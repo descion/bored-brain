@@ -73,6 +73,7 @@
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
     <Compile Include="ViewModels\CardWrapper.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ColumnViewModel.cs" />
     <Compile Include="ViewModels\ColumnWrapper.cs" />
     <Compile Include="ViewModels\EditCardViewModel.cs" />

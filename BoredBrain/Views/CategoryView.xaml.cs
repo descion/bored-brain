@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BoredBrain.Models;
+using BoredBrain.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,14 @@ namespace BoredBrain.Views {
     public partial class CategoryView : UserControl {
         public CategoryView() {
             InitializeComponent();
+        }
+
+        private void Category_Drop(object sender, DragEventArgs e) {
+            CategoryViewModel viewModel = ((CategoryViewModel)this.DataContext);
+
+            Card card = (Card)e.Data.GetData(DataFormats.Serializable);
+            card.SetFieldValue(viewModel.Category, viewModel.CategoryValue);
+            
         }
     }
 }

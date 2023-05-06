@@ -20,6 +20,11 @@ namespace BoredBrain.Views {
             Card card = (Card)e.Data.GetData(DataFormats.Serializable);
 
             card.SetFieldValue(viewModel.Board.ColumnField, viewModel.Headline);
+
+            if (viewModel.Board.CategoryField != null) {
+                card.SetFieldValue(viewModel.Board.CategoryField, viewModel.Category);
+            }
+
             viewModel.Board.MoveToEnd(card);
 
             e.Handled = true;

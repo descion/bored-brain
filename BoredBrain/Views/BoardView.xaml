@@ -38,6 +38,7 @@
                         SelectedValue="{Binding ColumnField}" 
                         SelectionChanged="ColumnField_SelectionChanged" Width="100px"></ComboBox>
                     <ComboBox 
+                        Name="CategoryField"
                         Style="{StaticResource MaterialDesignOutlinedComboBox}"
                         materialDesign:HintAssist.Hint="Category field" 
                         MinWidth="200px"
@@ -45,18 +46,19 @@
                         ItemsSource="{Binding SelectFields}" 
                         SelectedValue="{Binding CategoryField}" 
                         SelectionChanged="CategoryField_SelectionChanged" Width="100px"></ComboBox>
-                </StackPanel>
+                        <Button Margin="20,0,0,10" Height="50" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignPaperButton}" FontSize="16" Content="Clear Category" Click="ClearCategory_Click"></Button>
+                    </StackPanel>
                 </Border>
-                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-                    <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Columns}">
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Categories}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:ColumnView DataContext="{Binding ColumnViewModel}"></local:ColumnView>
+                                <local:CategoryView DataContext="{Binding}"></local:CategoryView>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
 

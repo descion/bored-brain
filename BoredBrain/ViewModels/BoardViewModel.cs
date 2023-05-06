@@ -12,11 +12,11 @@ namespace BoredBrain.ViewModels {
 
     class BoardViewModel : INotifyPropertyChanged {
 
-        public ObservableCollection<ColumnWrapper> Columns { get; set; }
-
         public string ColumnField { get; set; }
 
         public string CategoryField { get; set; }
+
+        public ObservableCollection<CategoryViewModel> Categories { get; set; }
 
         private ObservableCollection<string> selectFields;
         public ObservableCollection<string> SelectFields { get {
@@ -34,40 +34,39 @@ namespace BoredBrain.ViewModels {
         public event PropertyChangedEventHandler PropertyChanged;
 
         public BoardViewModel(BoardView boardView) {
-            this.Columns = new ObservableCollection<ColumnWrapper>();
+            this.Categories = new ObservableCollection<CategoryViewModel>();
             this.SelectFields = new ObservableCollection<string>();
             this.boardView = boardView;
         }
 
         public void LoadBoard(Board board) {
+            this.Categories.Clear();
+            this.CategoryField = null;
 
-            this.Columns.Clear();
-
-            Field columnField = board.ColumnField;
-            this.ColumnField = columnField.Name;
+            this.ColumnField = board.ColumnField.Name;
             this.CategoryField = board.CategoryField?.Name;
 
-            for (int itValues = 0; itValues < columnField.PossibleValues.Count; itValues++) {
+            if (board.CategoryField != null) {
+                for (int i = 0; i < board.CategoryField.PossibleValues.Count; i++) {
+                    CategoryViewModel currentCategory = new CategoryViewModel(board.CategoryField.PossibleValues[i]) {
+                        EditCard = this.boardView.EditCard,
+                        MoveCard = this.boardView.MoveCard
+                    };
 
-                List<Card> cardsInColumn = board.GetCardsFiltered(columnField, columnField.PossibleValues[itValues]);
-
-                List<CardWrapper> cardWrapperList = new List<CardWrapper>();
-
-                for (int itCards = 0; itCards < cardsInColumn.Count; itCards++) {
-                    Card currentCard = cardsInColumn[itCards];
-
-                    cardWrapperList.Add(new CardWrapper() { CardViewModel = new CardViewModel(currentCard, this.OnEditCard, this.OnMoveCard) });
+                    currentCategory.LoadBoard(board);
+                    this.Categories.Add(currentCategory);
                 }
+            }
+            else {
 
-                ColumnViewModel columnVM = new ColumnViewModel() {
-                    Headline = columnField.PossibleValues[itValues],
-                    Cards = cardWrapperList,
-                    Board = board
+                CategoryViewModel defaultCategory = new CategoryViewModel(null) {
+                    EditCard = this.boardView.EditCard,
+                    MoveCard = this.boardView.MoveCard
                 };
 
-                this.Columns.Add(new ColumnWrapper() { ColumnViewModel = columnVM });
+                defaultCategory.LoadBoard(board);
+                this.Categories.Add(defaultCategory);
             }
-
 
             List<string> selectFields = new List<string>();
 
@@ -78,14 +77,6 @@ namespace BoredBrain.ViewModels {
             }
 
             this.SelectFields = new ObservableCollection<string>(selectFields);
-        }
-
-        private void OnEditCard(Card card) {
-            this.boardView.EditCard(card);
-        }
-
-        private void OnMoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {
-            this.boardView.MoveCard(cardToMove, referenceCard, mode);
         }
     }
 }

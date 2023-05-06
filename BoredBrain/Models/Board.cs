@@ -71,6 +71,11 @@ namespace BoredBrain.Models {
 
         public void MoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {
             cardToMove.SetFieldValue(this.ColumnField, referenceCard.GetFieldValue(this.ColumnField));
+
+            if (this.CategoryField != null) {
+                cardToMove.SetFieldValue(this.CategoryField, referenceCard.GetFieldValue(this.CategoryField));
+            }
+
             this.Cards.Remove(cardToMove);
 
             if (mode == CardMoveMode.Before) {
