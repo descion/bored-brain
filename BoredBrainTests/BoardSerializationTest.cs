@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using BoredBrain;
+﻿using System.IO;
 using BoredBrain.Models;
 using BoredBrain.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
