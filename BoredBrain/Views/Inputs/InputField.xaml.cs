@@ -46,6 +46,11 @@ namespace BoredBrain.Views.Inputs {
                     MultiselectInput multiselectInput = new MultiselectInput(multiselectViewModel);
                     this.Main.Children.Add(multiselectInput);
                     break;
+                case "Date":
+                    DateInput dateInput = new DateInput();
+                    this.Main.Children.Add(dateInput);
+                    dateInput.DataContext =new DateViewModel() { Definition = this.definition };
+                    break;
                 default:
                     break;
             }

@@ -73,6 +73,7 @@
                                 <ComboBoxItem>Number</ComboBoxItem>
                                 <ComboBoxItem>Select</ComboBoxItem>
                                 <ComboBoxItem>Multiselect</ComboBoxItem>
+                                <ComboBoxItem>Date</ComboBoxItem>
                             </ComboBox>
                             <Button Grid.Column="2" Margin="10" Click="Add_Click">Add</Button>
                         </Grid>

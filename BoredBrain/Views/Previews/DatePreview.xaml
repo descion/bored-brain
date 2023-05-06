@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="BoredBrain.Views.Previews.DatePreview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BoredBrain.Views.Previews"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="0,10,10,0" Text="{Binding Definition.Name}" FontSize="10" VerticalAlignment="Center" Foreground="Gray"></TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,10,10,0">
+            <TextBlock Text="{Binding DateString}" Grid.Column="1" FontSize="12" Foreground="#CCCCCC" TextWrapping="Wrap"></TextBlock>
+            <materialDesign:PackIcon Foreground="Gray" Kind="Calendar" Margin="5,0,0,0"></materialDesign:PackIcon>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

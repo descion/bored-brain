@@ -58,6 +58,13 @@ namespace BoredBrain.Views.Previews {
                     this.Main.Children.Add(multiselectInput);
                     multiselectInput.DataContext = multiselectViewModel;
                     break;
+                case "Date":
+                    if (!string.IsNullOrEmpty((string)this.definition.Value)) {
+                        DatePreview dateInput = new DatePreview();
+                        this.Main.Children.Add(dateInput);
+                        dateInput.DataContext = new DateViewModel() { Definition = this.definition };
+                    }
+                    break;
                 default:
                     break;
             }

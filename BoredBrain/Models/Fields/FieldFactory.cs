@@ -33,6 +33,9 @@ namespace BoredBrain.Models {
                 case FieldType.Number:
                     f = new NumberField();
                     break;
+                case FieldType.Date:
+                    f = new DateField();
+                    break;
             }
 
             return f;
