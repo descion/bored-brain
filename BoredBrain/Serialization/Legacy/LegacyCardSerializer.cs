@@ -7,7 +7,11 @@ namespace BoredBrain.Serialization {
 
     public static class LegacyCardSerializer {
 
+        //---------------------------------------------------------------------------
+
         private const string CONTENT_START = ":::CONTENTSTART:::";
+
+        //---------------------------------------------------------------------------
 
         public static string Serialize(Card card) {
             StringBuilder cardContent = new StringBuilder();
@@ -33,6 +37,8 @@ namespace BoredBrain.Serialization {
 
             return cardContent.ToString();
         }
+
+        //---------------------------------------------------------------------------
 
         public static Card Deserialize(string cardString, Structure structure) {
             Card card = new Card(structure);

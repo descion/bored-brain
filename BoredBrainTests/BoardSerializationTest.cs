@@ -9,6 +9,8 @@ namespace BoredBrainTests {
     [TestClass]
     public class BoardSerializationTest {
 
+        //---------------------------------------------------------------------------
+
         [TestMethod]
         public void SaveAndLoadTest() {
             if (Directory.Exists("TestFolder")) {
@@ -56,6 +58,8 @@ namespace BoredBrainTests {
             Assert.AreEqual(b.Cards.First.Value.Title, b2.Cards.First.Value.Title);
             Assert.AreEqual(b.Cards.First.Value.Content, b2.Cards.First.Value.Content);
         }
+
+        //---------------------------------------------------------------------------
 
         [TestMethod]
         public void RenameFieldTest() {

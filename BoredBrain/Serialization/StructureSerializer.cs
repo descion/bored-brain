@@ -5,9 +5,13 @@ using System.Text.Json;
 namespace BoredBrain.Serialization {
     public static class StructureSerializer {
 
+        //---------------------------------------------------------------------------
+
         private class StructureJSON {
             public List<FieldSerializer.FieldJSON> Fields { get; set; }
         }
+
+        //---------------------------------------------------------------------------
 
         public static string Serialize(Structure structure) {
 
@@ -21,6 +25,8 @@ namespace BoredBrain.Serialization {
 
             return JsonSerializer.Serialize(structureJson);
         }
+
+        //---------------------------------------------------------------------------
 
         public static Structure Deserialize(string structureJsonString) {
             StructureJSON structureJson = JsonSerializer.Deserialize<StructureJSON>(structureJsonString);

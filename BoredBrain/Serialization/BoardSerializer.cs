@@ -7,9 +7,13 @@ using System.Text.Json;
 namespace BoredBrain.Serialization {
     public static class BoardSerializer {
 
+        //---------------------------------------------------------------------------
+
         private const string BOARD_FILE = "board.json";
         private const string STRUCTURE_FILE = "structure.json";
         private const string CARD_FOLDER = "cards";
+
+        //---------------------------------------------------------------------------
 
         private class BoardJSON {
             public string ID { get; set; }
@@ -18,6 +22,8 @@ namespace BoredBrain.Serialization {
             public string CategoryField { get; set; }
             public List<string> CardOrder { get; set; }
         }
+
+        //---------------------------------------------------------------------------
 
         public static void Save(Board board) {
             BoardJSON boardJson = new BoardJSON() {
@@ -38,6 +44,8 @@ namespace BoredBrain.Serialization {
             File.WriteAllText(Path.Combine(board.Path, STRUCTURE_FILE), StructureSerializer.Serialize(board.Structure));
             File.WriteAllText(Path.Combine(board.Path, BOARD_FILE), JsonSerializer.Serialize(boardJson));
         }
+
+        //---------------------------------------------------------------------------
 
         public static void Load(Board board) {
 

@@ -20,9 +20,14 @@ namespace BoredBrain.Views {
     /// Interaction logic for CategoryView.xaml
     /// </summary>
     public partial class CategoryView : UserControl {
+
+        //---------------------------------------------------------------------------
+
         public CategoryView() {
             InitializeComponent();
         }
+
+        //---------------------------------------------------------------------------
 
         private void Category_Drop(object sender, DragEventArgs e) {
             CategoryViewModel viewModel = ((CategoryViewModel)this.DataContext);

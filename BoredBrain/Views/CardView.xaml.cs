@@ -11,11 +11,15 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class CardView : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private bool mouseDown;
 
         private CardViewModel card;
 
         private CardDropPreview dropPreview;
+
+        //---------------------------------------------------------------------------
 
         public CardView() {
             InitializeComponent();
@@ -23,16 +27,22 @@ namespace BoredBrain.Views {
             this.DataContextChanged += this.OnDataContextChanged;
         }
 
+        //---------------------------------------------------------------------------
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             this.card = ((CardWrapper)this.DataContext).CardViewModel;
             this.DataContextChanged -= this.OnDataContextChanged;
         }
+
+        //---------------------------------------------------------------------------
 
         private void Card_MouseDown(object sender, MouseButtonEventArgs e) {
             if (e.ChangedButton == MouseButton.Left) {
                 this.mouseDown = true;
             }
         }
+
+        //---------------------------------------------------------------------------
 
         private void Card_MouseMove(object sender, MouseEventArgs e) {
             if (e.LeftButton == MouseButtonState.Pressed && this.mouseDown) {
@@ -41,6 +51,8 @@ namespace BoredBrain.Views {
             }
         }
 
+        //---------------------------------------------------------------------------
+
         private void Card_MouseUp(object sender, MouseButtonEventArgs e) {
             if (this.mouseDown && e.ChangedButton == MouseButton.Left) {
                 this.card.OnEditCard?.Invoke(this.card.Card);
@@ -48,6 +60,8 @@ namespace BoredBrain.Views {
 
             this.mouseDown = false;
         }
+
+        //---------------------------------------------------------------------------
 
         private void Card_Drop(object sender, DragEventArgs e) {
             Card card = (Card)e.Data.GetData(DataFormats.Serializable);
@@ -65,6 +79,8 @@ namespace BoredBrain.Views {
 
         }
 
+        //---------------------------------------------------------------------------
+
         private void Card_DragEnter(object sender, DragEventArgs e) {
             Card card = (Card)e.Data.GetData(DataFormats.Serializable);
             this.dropPreview = new CardDropPreview(card);
@@ -79,15 +95,21 @@ namespace BoredBrain.Views {
             e.Handled = true;
         }
 
+        //---------------------------------------------------------------------------
+
         private void Card_DragLeave(object sender, DragEventArgs e) {
             this.CardContainer.Children.Remove(this.dropPreview);
             this.dropPreview = null;
             e.Handled = true;
         }
 
+        //---------------------------------------------------------------------------
+
         private bool IsDropBefore(DragEventArgs e) {
             return e.GetPosition(this.Card).Y < this.Card.ActualHeight * 0.5f;
         }
+
+        //---------------------------------------------------------------------------
 
         private void Card_QueryContinueDrag(object sender, QueryContinueDragEventArgs e) {
             if (e.EscapePressed) {

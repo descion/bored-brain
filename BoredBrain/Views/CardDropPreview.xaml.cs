@@ -21,7 +21,11 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class CardDropPreview : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private CardViewModel previewCard;
+
+        //---------------------------------------------------------------------------
 
         public CardDropPreview(Card previewCard) {
             InitializeComponent();

@@ -22,11 +22,15 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class StructureView : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private Board board;
 
         private StructureViewModel structureViewModel;
 
         public event OnClose OnClose;
+
+        //---------------------------------------------------------------------------
 
         public StructureView(Board board) {
             InitializeComponent();
@@ -36,14 +40,20 @@ namespace BoredBrain.Views {
             this.DataContext = structureViewModel;
         }
 
+        //---------------------------------------------------------------------------
+
         private void Save_Click(object sender, RoutedEventArgs e) {
             this.structureViewModel.Apply();
             this.OnClose?.Invoke(true);
         }
 
+        //---------------------------------------------------------------------------
+
         private void Close_Click(object sender, RoutedEventArgs e) {
             this.OnClose?.Invoke(false);
         }
+
+        //---------------------------------------------------------------------------
 
         private void Add_Click(object sender, RoutedEventArgs e) {
             string fieldName = this.NewFieldName.Text;

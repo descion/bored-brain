@@ -8,12 +8,18 @@ namespace BoredBrain {
 
     public static class LegacyFieldSerializer {
 
+        //---------------------------------------------------------------------------
+
         private const string SERIALIZATION_SEPARATOR = ":::";
         private const char VALUE_SEPARATOR = ';';
+
+        //---------------------------------------------------------------------------
 
         public static string Serialize(Field field) {
             return field.Type.ToString() + SERIALIZATION_SEPARATOR + field.Name + SERIALIZATION_SEPARATOR + SerializeValues(field.PossibleValues) + SERIALIZATION_SEPARATOR + field.ShowOnCard;
         }
+
+        //---------------------------------------------------------------------------
 
         private static string SerializeValues(List<string> values) {
             StringBuilder dataBuilder = new StringBuilder();
@@ -25,6 +31,8 @@ namespace BoredBrain {
 
             return dataBuilder.ToString();
         }
+
+        //---------------------------------------------------------------------------
 
         public static Field Deserialize(string fieldDefinition) {
             string[] contents = fieldDefinition.Split(new string[] { SERIALIZATION_SEPARATOR }, StringSplitOptions.None);
@@ -39,6 +47,8 @@ namespace BoredBrain {
 
             return field;
         }
+
+        //---------------------------------------------------------------------------
 
         private static List<string> DeserializeValues(string valueString) { 
             string[] splitData = valueString.Split(new char[] { VALUE_SEPARATOR }, StringSplitOptions.RemoveEmptyEntries);

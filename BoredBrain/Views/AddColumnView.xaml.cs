@@ -20,9 +20,13 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class AddColumnView : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private AddColumnViewModel addColumnViewModel;
         
         public Action<bool> OnClose { get; set; }
+
+        //---------------------------------------------------------------------------
 
         public AddColumnView() {
             InitializeComponent();
@@ -31,15 +35,19 @@ namespace BoredBrain.Views {
             this.DataContext = this.addColumnViewModel;
         }
 
-
+        //---------------------------------------------------------------------------
 
         public string GetName() {
             return this.addColumnViewModel.Name;
         }
 
+        //---------------------------------------------------------------------------
+
         private void Close_Click(object sender, RoutedEventArgs e) {
             this.OnClose?.Invoke(false);
         }
+
+        //---------------------------------------------------------------------------
 
         private void Add_Click(object sender, RoutedEventArgs e) {
             this.OnClose?.Invoke(true);

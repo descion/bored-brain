@@ -11,6 +11,8 @@ using System.Windows;
 namespace BoredBrain.ViewModels {
     class CategoryViewModel {
 
+        //---------------------------------------------------------------------------
+
         public Field Category { get; set; }
 
         public string CategoryValue { get; set; }
@@ -26,10 +28,14 @@ namespace BoredBrain.ViewModels {
             }
         }
 
+        //---------------------------------------------------------------------------
+
         public CategoryViewModel(string categoryValue) {
             this.Columns = new ObservableCollection<ColumnViewModel>();
             this.CategoryValue = categoryValue;
         }
+
+        //---------------------------------------------------------------------------
 
         public void LoadBoard(Board board) {
 
@@ -65,10 +71,13 @@ namespace BoredBrain.ViewModels {
 
         }
 
+        //---------------------------------------------------------------------------
 
         private void OnEditCard(Card card) {
             this.EditCard?.Invoke(card);
         }
+
+        //---------------------------------------------------------------------------
 
         private void OnMoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {
             this.MoveCard?.Invoke(cardToMove, referenceCard, mode);

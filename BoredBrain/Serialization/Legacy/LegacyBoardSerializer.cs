@@ -8,7 +8,11 @@ namespace BoredBrain.Serialization {
 
     public static class LegacyBoardSerializer {
 
+        //---------------------------------------------------------------------------
+
         private const string CARD_LIST = "CARDLIST";
+
+        //---------------------------------------------------------------------------
 
         public static void Save(Board board) {
 

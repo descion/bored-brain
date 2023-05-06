@@ -8,9 +8,14 @@ using System.Threading.Tasks;
 
 namespace BoredBrain.ViewModels {
     public class StructureViewModel {
+
+        //---------------------------------------------------------------------------
+
         public ObservableCollection<FieldDefinition> Fields { get; set; }
 
         private Structure structure;
+
+        //---------------------------------------------------------------------------
 
         public StructureViewModel(Board board) {
             this.structure = board.Structure;
@@ -35,14 +40,20 @@ namespace BoredBrain.ViewModels {
             }
         }
 
+        //---------------------------------------------------------------------------
+
         public void AddField(FieldDefinition definition) {
             definition.Delete = this.DeleteField;
             this.Fields.Add(definition);
         }
 
+        //---------------------------------------------------------------------------
+
         private void DeleteField(FieldDefinition definition) {
             this.Fields.Remove(definition);
         }
+
+        //---------------------------------------------------------------------------
 
         public void Apply() {
 

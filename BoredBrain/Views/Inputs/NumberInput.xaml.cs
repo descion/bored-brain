@@ -23,14 +23,20 @@ namespace BoredBrain {
             InitializeComponent();
         }
 
+        //---------------------------------------------------------------------------
+
         private void Value_PreviewTextInput(object sender, TextCompositionEventArgs e) {
             e.Handled = !IsTextAllowed(e.Text);
         }
+
+        //---------------------------------------------------------------------------
 
         private static readonly Regex _regex = new Regex("[^0-9-]+"); //regex that matches disallowed text
         private static bool IsTextAllowed(string text) {
             return !_regex.IsMatch(text);
         }
+
+        //---------------------------------------------------------------------------
 
         // Use the DataObject.Pasting Handler 
         private void TextBoxPasting(object sender, DataObjectPastingEventArgs e) {

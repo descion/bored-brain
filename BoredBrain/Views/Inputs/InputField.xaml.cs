@@ -20,13 +20,19 @@ namespace BoredBrain.Views.Inputs {
     /// </summary>
     public partial class InputField : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private FieldDefinition definition;
+
+        //---------------------------------------------------------------------------
 
         public InputField() {
             InitializeComponent();
 
             this.DataContextChanged += this.OnDataContextChanged;
         }
+
+        //---------------------------------------------------------------------------
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             this.definition = ((FieldDefinitionWrapper)this.DataContext).Definition;

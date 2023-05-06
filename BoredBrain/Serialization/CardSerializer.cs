@@ -5,12 +5,17 @@ using System.Text.Json;
 
 namespace BoredBrain.Serialization {
     public static class CardSerializer {
+
+        //---------------------------------------------------------------------------
+
         private class CardJSON {
             public string ID { get; set; }
             public string Title { get; set; }
             public string Content { get; set; }
             public Dictionary<string, string> FieldValues { get; set; }
         }
+
+        //---------------------------------------------------------------------------
 
         public static string Serialize(Card card) {
             CardJSON cardJson = new CardJSON(){
@@ -35,6 +40,8 @@ namespace BoredBrain.Serialization {
 
             return JsonSerializer.Serialize(cardJson);
         }
+
+        //---------------------------------------------------------------------------
 
         public static Card Deserialize(string cardJsonString, Structure structure) {
             CardJSON cardJson = JsonSerializer.Deserialize<CardJSON>(cardJsonString);

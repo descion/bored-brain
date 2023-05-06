@@ -12,6 +12,8 @@ namespace BoredBrain.ViewModels {
 
     class BoardViewModel : INotifyPropertyChanged {
 
+        //---------------------------------------------------------------------------
+
         public string ColumnField { get; set; }
 
         public string CategoryField { get; set; }
@@ -45,12 +47,17 @@ namespace BoredBrain.ViewModels {
         private BoardView boardView;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        
+        //---------------------------------------------------------------------------
+
 
         public BoardViewModel(BoardView boardView) {
             this.Categories = new ObservableCollection<CategoryViewModel>();
             this.SelectFields = new ObservableCollection<string>();
             this.boardView = boardView;
         }
+
+        //---------------------------------------------------------------------------
 
         public void LoadBoard(Board board) {
             this.Categories.Clear();

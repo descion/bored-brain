@@ -9,11 +9,17 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class ColumnView : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private CardDropPreview dropPreview;
+
+        //---------------------------------------------------------------------------
 
         public ColumnView() {
             InitializeComponent();
         }
+
+        //---------------------------------------------------------------------------
 
         private void Card_Drop(object sender, DragEventArgs e) {
             ColumnViewModel viewModel = ((ColumnViewModel)this.DataContext);
@@ -30,11 +36,15 @@ namespace BoredBrain.Views {
             e.Handled = true;
         }
 
+        //---------------------------------------------------------------------------
+
         private void Card_DragEnter(object sender, DragEventArgs e) {
             Card card = (Card)e.Data.GetData(DataFormats.Serializable);
             this.dropPreview = new CardDropPreview(card);
             this.CardContainer.Children.Add(this.dropPreview);
         }
+
+        //---------------------------------------------------------------------------
 
         private void Card_DragLeave(object sender, DragEventArgs e) {
             this.CardContainer.Children.Remove(this.dropPreview);

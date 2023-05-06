@@ -20,9 +20,14 @@ namespace BoredBrain.Views {
     /// Interaction logic for FieldView.xaml
     /// </summary>
     public partial class FieldView : UserControl {
+
+        //---------------------------------------------------------------------------
+
         public FieldView() {
             InitializeComponent();
         }
+
+        //---------------------------------------------------------------------------
 
         private void AddPossibleValue_Click(object sender, RoutedEventArgs e) {
             FieldDefinition definition = (FieldDefinition)this.DataContext;
@@ -32,12 +37,16 @@ namespace BoredBrain.Views {
             this.NewPossibleValue.Text = "";
         }
 
+        //---------------------------------------------------------------------------
+
         private void PossibleValue_DeleteClick(object sender, RoutedEventArgs e) {
             Chip possibleValueSender = (Chip)sender;
             FieldDefinition definition = (FieldDefinition)this.DataContext;
 
             definition.PossibleValues.Remove(possibleValueSender.Content as string);
         }
+
+        //---------------------------------------------------------------------------
 
         private void Delete_Click(object sender, RoutedEventArgs e) {
             FieldDefinition definition = (FieldDefinition)this.DataContext;

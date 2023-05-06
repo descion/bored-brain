@@ -107,8 +107,8 @@
     <Compile Include="ViewModels\CardWrapper.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ColumnViewModel.cs" />
-    <Compile Include="ViewModels\ColumnWrapper.cs" />
     <Compile Include="ViewModels\EditCardViewModel.cs" />
+    <Compile Include="ViewModels\FieldDefinition.cs" />
     <Compile Include="ViewModels\StructureViewModel.cs" />
     <Compile Include="Views\AddColumnView.xaml.cs">
       <DependentUpon>AddColumnView.xaml</DependentUpon>

@@ -12,11 +12,15 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class BoardView : UserControl {
 
+        //---------------------------------------------------------------------------
+
         private Board board;
 
         private BoardViewModel boardVM;
 
         private EditCardView currentCardView;
+
+        //---------------------------------------------------------------------------
 
         public BoardView() {
             InitializeComponent();
@@ -27,6 +31,8 @@ namespace BoredBrain.Views {
 
             this.InitializeBoard("SavedBoard");
         }
+
+        //---------------------------------------------------------------------------
 
         private void InitializeBoard(string path) {
             if (this.board != null) {
@@ -56,10 +62,14 @@ namespace BoredBrain.Views {
             this.boardVM.LoadBoard(this.board);
         }
 
+        //---------------------------------------------------------------------------
+
         private void OnBoardChanged() {
             BoardSerializer.Save(this.board);
             this.boardVM.LoadBoard(this.board);
         }
+
+        //---------------------------------------------------------------------------
 
         private void CreateBoard_Click(object sender, RoutedEventArgs e) {
             using (System.Windows.Forms.FolderBrowserDialog folderDialog = new System.Windows.Forms.FolderBrowserDialog()) {
@@ -71,6 +81,8 @@ namespace BoredBrain.Views {
             }
         }
 
+        //---------------------------------------------------------------------------
+
         private void OpenBoard_Click(object sender, RoutedEventArgs e) {
             using (System.Windows.Forms.OpenFileDialog openDialog = new System.Windows.Forms.OpenFileDialog()) {
                 openDialog.Filter = "Bored Brain Board Files (*.bbb)|*.bbb";
@@ -79,6 +91,8 @@ namespace BoredBrain.Views {
                 }
             }
         }
+
+        //---------------------------------------------------------------------------
 
         private void EditStructure_Click(object sender, RoutedEventArgs e) {
             StructureView addView = new StructureView(this.board);
@@ -92,6 +106,8 @@ namespace BoredBrain.Views {
                 this.OnBoardChanged();
             };
         }
+
+        //---------------------------------------------------------------------------
 
         private void CreateColumn_Click(object sender, RoutedEventArgs e) {
             AddColumnView addView = new AddColumnView();
@@ -109,6 +125,8 @@ namespace BoredBrain.Views {
             };
         }
 
+        //---------------------------------------------------------------------------
+
         private void CreateCard_Click(object sender, RoutedEventArgs e) {
             Card card = this.board.CreateCard();
 
@@ -116,25 +134,34 @@ namespace BoredBrain.Views {
             this.MainPanel.Children.Add(this.currentCardView);
         }
 
+        //---------------------------------------------------------------------------
+
         private void OnCreateCard(Card card) {
             this.board.AddCard(card);
             this.CloseEditDialog();
         }
 
+        //---------------------------------------------------------------------------
 
         private void OnCloseEditDialog(Card card) {
             this.CloseEditDialog();
         }
+
+        //---------------------------------------------------------------------------
 
         private void OnDeleteCard(Card card) {
             this.board.RemoveCard(card);
             this.CloseEditDialog();
         }
 
+        //---------------------------------------------------------------------------
+
         private void CloseEditDialog() {
             this.MainPanel.Children.Remove(this.currentCardView);
             this.OnBoardChanged();
         }
+
+        //---------------------------------------------------------------------------
 
         public void EditCard(Card card) {
             
@@ -142,9 +169,13 @@ namespace BoredBrain.Views {
             this.MainPanel.Children.Add(this.currentCardView);
         }
 
+        //---------------------------------------------------------------------------
+
         public void MoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {
             this.board.MoveCard(cardToMove, referenceCard, mode);
         }
+
+        //---------------------------------------------------------------------------
 
         private void ColumnField_SelectionChanged(object sender, SelectionChangedEventArgs e) {
 
@@ -152,16 +183,22 @@ namespace BoredBrain.Views {
             this.OnBoardChanged();
         }
 
+        //---------------------------------------------------------------------------
+
         private void CategoryField_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             this.board.CategoryField = this.board.Structure.GetFieldByName(this.boardVM.CategoryField);
             this.OnBoardChanged();
         }
+
+        //---------------------------------------------------------------------------
 
         private void ClearCategory_Click(object sender, RoutedEventArgs e) {
             this.board.CategoryField = null;
             this.CategoryField.SelectedIndex = -1;
             this.OnBoardChanged();
         }
+
+        //---------------------------------------------------------------------------
 
         private void Board_Drop(object sender, DragEventArgs e) {
             this.OnBoardChanged();

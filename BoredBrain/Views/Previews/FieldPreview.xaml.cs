@@ -22,10 +22,14 @@ namespace BoredBrain.Views.Previews {
         
         private FieldDefinition definition;
 
+        //---------------------------------------------------------------------------
+
         public FieldPreview() {
             InitializeComponent();
             this.DataContextChanged += this.OnDataContextChanged;
         }
+
+        //---------------------------------------------------------------------------
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
             this.definition = (FieldDefinition)this.DataContext;

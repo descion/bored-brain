@@ -2,6 +2,9 @@
 
 namespace BoredBrain.Models {
     public static class FieldFactory {
+
+        //---------------------------------------------------------------------------
+
         public static Field CreateField(string fieldDefinition) {
             string[] contents = fieldDefinition.Split(new string[] { ":::" }, StringSplitOptions.None);
 
@@ -10,6 +13,8 @@ namespace BoredBrain.Models {
 
             return f;
         }
+
+        //---------------------------------------------------------------------------
 
         public static Field CreateField(FieldType type) {
             

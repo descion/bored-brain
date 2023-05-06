@@ -5,6 +5,8 @@ using System.Collections.Generic;
 namespace BoredBrain {
     public static class FieldSerializer {
 
+        //---------------------------------------------------------------------------
+
         public class FieldJSON {
 
             public string Type { get; set; }
@@ -16,6 +18,8 @@ namespace BoredBrain {
             public bool ShowOnCard { get; set; }
         }
 
+        //---------------------------------------------------------------------------
+
         public static FieldJSON ToJSONType(Field field) {
 
             return new FieldJSON() {
@@ -25,6 +29,8 @@ namespace BoredBrain {
                 ShowOnCard = field.ShowOnCard
             };
         }
+
+        //---------------------------------------------------------------------------
 
         public static Field FromJSONType(FieldJSON fieldJson) {
             Field field = FieldFactory.CreateField((FieldType)Enum.Parse(typeof(FieldType), fieldJson.Type));

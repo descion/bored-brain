@@ -5,6 +5,9 @@ using System.Text;
 namespace BoredBrain.Serialization {
 
     public static class LegacyStructureSerializer {
+
+        //---------------------------------------------------------------------------
+
         public static string Serialize(Structure structure) {
             StringBuilder fieldBuilder = new StringBuilder();
 
@@ -14,6 +17,8 @@ namespace BoredBrain.Serialization {
 
             return fieldBuilder.ToString();
         }
+
+        //---------------------------------------------------------------------------
 
         public static Structure Deserialize(string structureDefinition) {
             Structure structure = new Structure();
