@@ -56,7 +56,7 @@ namespace BoredBrain.ViewModels {
                 for (int itCards = 0; itCards < cardsInColumn.Count; itCards++) {
                     Card currentCard = cardsInColumn[itCards];
 
-                    cardWrapperList.Add(new CardWrapper() { CardViewModel = new CardViewModel(currentCard, this.OnEditCard) });
+                    cardWrapperList.Add(new CardWrapper() { CardViewModel = new CardViewModel(currentCard, this.OnEditCard, this.OnMoveCard) });
                 }
 
                 ColumnViewModel columnVM = new ColumnViewModel() {
@@ -82,6 +82,10 @@ namespace BoredBrain.ViewModels {
 
         private void OnEditCard(Card card) {
             this.boardView.EditCard(card);
+        }
+
+        private void OnMoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {
+            this.boardView.MoveCard(cardToMove, referenceCard, mode);
         }
     }
 }

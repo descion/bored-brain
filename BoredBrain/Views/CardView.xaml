@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BoredBrain.Views" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
+             MouseDown="Card_MouseDown"
              MouseMove="Card_MouseMove" 
              MouseUp="Card_MouseUp" 
+             AllowDrop="True"
+             Drop="Card_Drop"
+             DragEnter="Card_DragEnter"
+             DragLeave="Card_DragLeave"
+             PreviewQueryContinueDrag="Card_QueryContinueDrag"
+             Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -15,12 +22,15 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <materialDesign:Card
-        Width="auto"
-        Padding="8"
-        Background="#252525"
-        Foreground="White"
-        Style="{StaticResource MaterialDesignOutlinedCard}">
-        <TextBlock Text="{Binding Card.Title}" TextWrapping="Wrap" />  
-    </materialDesign:Card>
+    <StackPanel Name="CardContainer">
+        <materialDesign:Card
+            Width="auto"
+            Padding="8"
+            Background="#252525"
+            Foreground="White"
+            Name="Card"
+            Style="{StaticResource MaterialDesignOutlinedCard}">
+            <TextBlock Text="{Binding Card.Title}" TextWrapping="Wrap" />  
+        </materialDesign:Card>
+    </StackPanel>
 </UserControl>

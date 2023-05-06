@@ -1,4 +1,5 @@
 ﻿using BoredBrain.Models;
+using BoredBrain.Serialization;
 using BoredBrain.ViewModels;
 using System.Collections.Generic;
 using System.IO;
@@ -136,6 +137,10 @@ namespace BoredBrain.Views {
 
                 this.OnBoardChanged();
             };
+        }
+
+        public void MoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {
+            this.board.MoveCard(cardToMove, referenceCard, mode);
         }
 
         private void ColumnField_SelectionChanged(object sender, SelectionChangedEventArgs e) {

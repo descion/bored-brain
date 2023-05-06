@@ -10,6 +10,8 @@
         <GroupBox
             AllowDrop="True"
             Drop="Card_Drop"
+            DragEnter="Card_DragEnter"
+            DragLeave="Card_DragLeave"
             Margin="16"
             Width="300px"
             FontSize="16"
@@ -33,20 +35,21 @@
                     </StackPanel>
                 </DataTemplate>
             </GroupBox.HeaderTemplate>
-            <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Cards}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:CardView DataContext="{Binding CardViewModel}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+            <StackPanel Name="CardContainer">
+                <ItemsControl x:Name="ColumnList" ItemsSource="{Binding Cards}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:CardView DataContext="{Binding CardViewModel}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
-            </ItemsControl>
-            
+                </ItemsControl>
+            </StackPanel>
         </GroupBox>
     </Grid>
 </UserControl>

@@ -1,19 +1,7 @@
 ﻿using BoredBrain.Models;
 using BoredBrain.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BoredBrain.Views {
     /// <summary>
@@ -21,14 +9,31 @@ namespace BoredBrain.Views {
     /// </summary>
     public partial class ColumnView : UserControl {
 
+        private CardDropPreview dropPreview;
+
         public ColumnView() {
             InitializeComponent();
         }
 
         private void Card_Drop(object sender, DragEventArgs e) {
             ColumnViewModel viewModel = ((ColumnViewModel)this.DataContext);
+            Card card = (Card)e.Data.GetData(DataFormats.Serializable);
 
-            ((Card)e.Data.GetData(DataFormats.Serializable)).SetFieldValue(viewModel.Board.ColumnField, viewModel.Headline);
+            card.SetFieldValue(viewModel.Board.ColumnField, viewModel.Headline);
+            viewModel.Board.MoveToEnd(card);
+
+            e.Handled = true;
+        }
+
+        private void Card_DragEnter(object sender, DragEventArgs e) {
+            Card card = (Card)e.Data.GetData(DataFormats.Serializable);
+            this.dropPreview = new CardDropPreview(card);
+            this.CardContainer.Children.Add(this.dropPreview);
+        }
+
+        private void Card_DragLeave(object sender, DragEventArgs e) {
+            this.CardContainer.Children.Remove(this.dropPreview);
+            this.dropPreview = null;
         }
     }
 }

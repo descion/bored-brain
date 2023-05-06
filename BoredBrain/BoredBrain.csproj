@@ -67,6 +67,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Misc\CardMoveMode.cs" />
+    <Compile Include="Serialization\BoardSerializer.cs" />
     <Compile Include="ViewModels\AddColumnViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\CardViewModel.cs" />
@@ -80,6 +82,9 @@
     </Compile>
     <Compile Include="Views\BoardView.xaml.cs">
       <DependentUpon>BoardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CardDropPreview.xaml.cs">
+      <DependentUpon>CardDropPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CardView.xaml.cs">
       <DependentUpon>CardView.xaml</DependentUpon>
@@ -103,6 +108,10 @@
       <DependentUpon>StructureView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\AddColumnView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CardDropPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

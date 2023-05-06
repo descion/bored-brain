@@ -12,9 +12,12 @@ namespace BoredBrain.ViewModels {
 
         public Action<Card> OnEditCard { get; set; }
 
-        public CardViewModel(Card card, Action<Card> OnEditCard) {
+        public Action<Card, Card, CardMoveMode> OnMoveCard { get; set; }
+
+        public CardViewModel(Card card, Action<Card> OnEditCard, Action<Card, Card, CardMoveMode> OnMoveCard) {
             this.Card = card;
             this.OnEditCard = OnEditCard;
+            this.OnMoveCard = OnMoveCard;
         }        
     }
 }
