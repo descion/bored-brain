@@ -20,7 +20,7 @@ namespace BoredBrain.Views {
     /// <summary>
     /// Interaction logic for StructureView.xaml
     /// </summary>
-    public partial class StructureView : UserControl, IClose {
+    public partial class StructureView : UserControl {
 
         private Board board;
 

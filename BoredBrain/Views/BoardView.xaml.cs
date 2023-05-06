@@ -16,6 +16,8 @@ namespace BoredBrain.Views {
 
         private BoardViewModel boardVM;
 
+        private EditCardView currentCardView;
+
         public BoardView() {
             InitializeComponent();
 
@@ -96,7 +98,7 @@ namespace BoredBrain.Views {
 
             this.MainPanel.Children.Add(addView);
 
-            addView.OnClose += (bool success) => {
+            addView.OnClose = (bool success) => {
                 if (success) {
                     this.board.ColumnField.PossibleValues.Add(addView.GetName());
                 }
@@ -110,33 +112,34 @@ namespace BoredBrain.Views {
         private void CreateCard_Click(object sender, RoutedEventArgs e) {
             Card card = this.board.CreateCard();
 
-            EditCardView editView = new EditCardView(card);
+            this.currentCardView = new EditCardView(card, this.OnCloseEditDialog, this.OnCreateCard, null);
+            this.MainPanel.Children.Add(this.currentCardView);
+        }
 
-            this.MainPanel.Children.Add(editView);
+        private void OnCreateCard(Card card) {
+            this.board.AddCard(card);
+            this.CloseEditDialog();
+        }
 
-            editView.OnClose += (bool success) => {
-                if (success) {
-                    this.board.AddCard(card);
-                }
 
-                this.MainPanel.Children.Remove(editView);
+        private void OnCloseEditDialog(Card card) {
+            this.CloseEditDialog();
+        }
 
-                this.OnBoardChanged();
-            };
+        private void OnDeleteCard(Card card) {
+            this.board.RemoveCard(card);
+            this.CloseEditDialog();
+        }
+
+        private void CloseEditDialog() {
+            this.MainPanel.Children.Remove(this.currentCardView);
+            this.OnBoardChanged();
         }
 
         public void EditCard(Card card) {
             
-            EditCardView editView = new EditCardView(card);
-
-            this.MainPanel.Children.Add(editView);
-
-            editView.OnClose += (bool success) => {
-                
-                this.MainPanel.Children.Remove(editView);
-
-                this.OnBoardChanged();
-            };
+            this.currentCardView = new EditCardView(card, this.OnCloseEditDialog, this.OnCloseEditDialog, this.OnDeleteCard);
+            this.MainPanel.Children.Add(this.currentCardView);
         }
 
         public void MoveCard(Card cardToMove, Card referenceCard, CardMoveMode mode) {

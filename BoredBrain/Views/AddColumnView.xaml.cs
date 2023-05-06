@@ -18,11 +18,11 @@ namespace BoredBrain.Views {
     /// <summary>
     /// Interaction logic for AddColumnView.xaml
     /// </summary>
-    public partial class AddColumnView : UserControl, IClose {
+    public partial class AddColumnView : UserControl {
 
         private AddColumnViewModel addColumnViewModel;
         
-        public event OnClose OnClose;
+        public Action<bool> OnClose { get; set; }
 
         public AddColumnView() {
             InitializeComponent();

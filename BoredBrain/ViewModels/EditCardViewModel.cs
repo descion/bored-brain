@@ -27,15 +27,23 @@ namespace BoredBrain.ViewModels {
 
     public class EditCardViewModel {
 
+        private bool showDelete;
+
         public string Title { get; set; }
 
         public string Content { get; set; }
 
         public List<FieldDefinitionWrapper> Fields { get; set; }
 
+        public Visibility DeleteVisibility { get {
+                return this.showDelete ? Visibility.Visible : Visibility.Collapsed; 
+            } 
+        }
+
         private Card card;
 
-        public EditCardViewModel(Card card) {
+        public EditCardViewModel(Card card, bool showDelete) {
+            this.showDelete = showDelete;
             this.Fields = new List<FieldDefinitionWrapper>();
 
             this.Title = card.Title;

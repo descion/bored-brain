@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -21,8 +22,6 @@ namespace BoredBrain.Models {
         public Field CategoryField { get; set; }
 
         public LinkedList<Card> Cards { get; private set; }
-
-        public List<Card> ArchivedCards { get; private set; }
 
         //---------------------------------------------------------------------------
 
@@ -88,7 +87,14 @@ namespace BoredBrain.Models {
 
         public void RemoveCard(Card card) {
             this.Cards.Remove(card);
-            this.ArchivedCards.Add(card);
+
+            if (File.Exists(System.IO.Path.Combine(this.Path, card.Id + ".bbc"))) {
+
+                Directory.CreateDirectory(System.IO.Path.Combine(this.Path, "Archive"));
+
+                File.Move(System.IO.Path.Combine(this.Path, card.Id + ".bbc"), System.IO.Path.Combine(this.Path, "Archive", card.Id + ".bbc"));
+            }
+
             this.OnBoardChanged?.Invoke();
         }
 
