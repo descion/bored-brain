@@ -36,9 +36,11 @@ namespace BoredBrain.Views.Previews {
 
             switch (this.definition.Type) {
                 case "Text":
-                    TextFieldPreview textInput = new TextFieldPreview();
-                    this.Main.Children.Add(textInput);
-                    textInput.DataContext = this.definition;
+                    if (string.IsNullOrEmpty((string)this.definition.Value)) {
+                        TextFieldPreview textInput = new TextFieldPreview();
+                        this.Main.Children.Add(textInput);
+                        textInput.DataContext = this.definition;
+                    }
                     break;
                 case "Number":
                     NumberFieldPreview numberInput = new NumberFieldPreview();
@@ -51,12 +53,13 @@ namespace BoredBrain.Views.Previews {
                     selectInput.DataContext = this.definition;
                     break;
                 case "Multiselect":
+                    if(this.definition.Value != null && ((string[])this.definition.Value).Length > 0) {
+                        MultiselectViewModel multiselectViewModel = new MultiselectViewModel(this.definition);
 
-                    MultiselectViewModel multiselectViewModel = new MultiselectViewModel(this.definition);
-
-                    MultiselectPreview multiselectInput = new MultiselectPreview();
-                    this.Main.Children.Add(multiselectInput);
-                    multiselectInput.DataContext = multiselectViewModel;
+                        MultiselectPreview multiselectInput = new MultiselectPreview();
+                        this.Main.Children.Add(multiselectInput);
+                        multiselectInput.DataContext = multiselectViewModel;
+                    }                    
                     break;
                 case "Date":
                     if (!string.IsNullOrEmpty((string)this.definition.Value)) {
