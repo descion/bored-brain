@@ -35,7 +35,7 @@ namespace BoredBrain.Views.Inputs {
         //---------------------------------------------------------------------------
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
-            this.definition = ((FieldDefinitionWrapper)this.DataContext).Definition;
+            this.definition = (FieldDefinition)this.DataContext;
 
             switch (this.definition.Type) {
                 case "Text":

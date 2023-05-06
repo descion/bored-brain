@@ -8,11 +8,9 @@ using System.Windows;
 
 namespace BoredBrain.ViewModels {
 
-    public class FieldDefinitionWrapper {
-        public FieldDefinition Definition { get; set; }
-    }
-
     public class EditCardViewModel {
+
+        //---------------------------------------------------------------------------
 
         private bool showDelete;
 
@@ -20,7 +18,7 @@ namespace BoredBrain.ViewModels {
 
         public string Content { get; set; }
 
-        public List<FieldDefinitionWrapper> Fields { get; set; }
+        public List<FieldDefinition> Fields { get; set; }
 
         public Visibility DeleteVisibility { get {
                 return this.showDelete ? Visibility.Visible : Visibility.Collapsed; 
@@ -29,9 +27,11 @@ namespace BoredBrain.ViewModels {
 
         private Card card;
 
+        //---------------------------------------------------------------------------
+
         public EditCardViewModel(Card card, bool showDelete) {
             this.showDelete = showDelete;
-            this.Fields = new List<FieldDefinitionWrapper>();
+            this.Fields = new List<FieldDefinition>();
 
             this.Title = card.Title;
             this.Content = card.Content;
@@ -46,21 +46,25 @@ namespace BoredBrain.ViewModels {
                     Value = card.GetFieldValue(currentField)
                 };
 
-                this.Fields.Add(new FieldDefinitionWrapper() { Definition = definition });
+                this.Fields.Add(definition);
             }
 
             this.card = card;
         }
+
+        //---------------------------------------------------------------------------
 
         public void Save() {
             this.card.Title = this.Title;
             this.card.Content = this.Content;
 
             for (int itFields = 0; itFields < this.Fields.Count; itFields++) {
-                FieldDefinition definition = this.Fields[itFields].Definition;
+                FieldDefinition definition = this.Fields[itFields];
 
                 this.card.SetFieldValue(this.card.Structure.GetFieldByName(definition.Name), definition.Value);
             }
         }
+
+        //---------------------------------------------------------------------------
     }
 }
