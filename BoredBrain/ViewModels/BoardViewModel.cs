@@ -3,12 +3,15 @@ using BoredBrain.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 
 namespace BoredBrain.ViewModels {
 
     class BoardViewModel : INotifyPropertyChanged {
 
         //---------------------------------------------------------------------------
+
+        public string Name { get; set; }
 
         public string ColumnField { get; set; }
 
@@ -56,6 +59,9 @@ namespace BoredBrain.ViewModels {
         //---------------------------------------------------------------------------
 
         public void LoadBoard(Board board) {
+
+            this.Name = new DirectoryInfo(board.Path).Name;
+
             this.Categories.Clear();
             this.CategoryField = null;
 

@@ -55,11 +55,26 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
                             <RowDefinition Height="1*"></RowDefinition>
 
                         </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Foreground="Gray"
+                                VerticalAlignment="Center"
+                            Margin="10,0,0,0"
+                              Style="{StaticResource MaterialDesignBody1TextBlock}"
+                              Text="Board: " />
+                        <TextBlock
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                              Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                              Text="{Binding Name}" />
+                        </StackPanel>
                         
-                        <ItemsControl x:Name="ColumnHeader" VerticalAlignment="Stretch" ItemsSource="{Binding ColumnValues}">
+                        <ItemsControl x:Name="ColumnHeader" Grid.Row="1"  VerticalAlignment="Stretch" ItemsSource="{Binding ColumnValues}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal"/>
@@ -74,7 +89,7 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         
-                        <ItemsControl x:Name="ColumnList" Grid.Row="1" VerticalAlignment="Stretch" ItemsSource="{Binding Categories}">
+                        <ItemsControl x:Name="ColumnList" Grid.Row="2" VerticalAlignment="Stretch" ItemsSource="{Binding Categories}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel VerticalAlignment="Stretch"/>
