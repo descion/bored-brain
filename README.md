@@ -4,7 +4,7 @@
 
 Bored Brain is a simple but highly customizable board app for Windows that works completely offline. The main purpose of this app is to help with self organization, but I'm sure there are a lot of different use-cases it can be used for. 
 
-![](docs/ExampleBoard.png)
+![](docs/ExampleBoard.PNG)
 
 ---
 
