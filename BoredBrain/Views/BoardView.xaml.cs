@@ -29,7 +29,7 @@ namespace BoredBrain.Views {
             this.boardVM = new BoardViewModel(this);
             this.DataContext = this.boardVM;
 
-            this.InitializeBoard("SavedBoard");
+            this.InitializeBoard("ExampleBoard");
         }
 
         //---------------------------------------------------------------------------
@@ -85,7 +85,7 @@ namespace BoredBrain.Views {
 
         private void OpenBoard_Click(object sender, RoutedEventArgs e) {
             using (System.Windows.Forms.OpenFileDialog openDialog = new System.Windows.Forms.OpenFileDialog()) {
-                openDialog.Filter = "Bored Brain Board Files (*.bbb)|*.bbb";
+                openDialog.Filter = "Bored Brain board.json (board.json)|*.json|Bored Brain Board Files (*.bbb)|*.bbb";
                 if (openDialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel) {
                     this.InitializeBoard(new FileInfo(openDialog.FileName).DirectoryName);
                 }
