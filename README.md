@@ -50,7 +50,7 @@ I recommend to backup your data regularly. Due to this app working with local fi
 
 Create, load and modify boards using the board menu.
 
-![](docs/board-menu.jpg)
+![](docs/Board-Menu.jpg)
 
 #### Create board
 Creates a new board inside a chosen folder.
@@ -74,7 +74,7 @@ The basic structure of a card is a title and text-content. This structure can be
 
 The ```Edit Structure Dialog``` allows you to change the structure of cards on the current board:
 
-![](docs/edit-structure.png)
+![](docs/Edit-Structure.png)
 
 The top part of the dialog lists the existing fields (in this case a *Status* field of type *select* with the possible value *'None'* and a *text* field called *ExampleField*). Use the ```Show on card```-Checkbox to show additional fields on the board view.
 
@@ -93,7 +93,7 @@ Click the ```Save```-button to save your changes and apply them to existing card
 
 The columns and categories of a board can be constructed from any select field in the card structure. This allows different views on the same cards. Use the dropdown fields on the top of the board view to change the column and category fields:
 
-![](docs/column-category.png)
+![](docs/Column-Category.PNG)
 
 The column field is mandatory, the category field is optional and can be reset using the ```Clear Category```-button.
 
@@ -105,11 +105,11 @@ The column field is mandatory, the category field is optional and can be reset u
 
 Use the ```Create Card```-button to create new cards.
 
-![](docs/create-card-button.png)
+![](docs/create-card-button.PNG)
 
 The ```Edit Card```-Dialog allows you to enter the contents for the new card.
 
-![](docs/create-card.png)
+![](docs/create-card.PNG)
 
 ---
 
@@ -117,11 +117,11 @@ The ```Edit Card```-Dialog allows you to enter the contents for the new card.
 
 Use the ```Create Column```-button to add a new value to the current column field:
 
-![](docs/create-column-button.png)
+![](docs/create-column-button.PNG)
 
 Enter the column name and click ```Add``` to add the column to the board. This will create a new value on the current column field.
 
-![](docs/create-column.png)
+![](docs/create-column.PNG)
 
 You can also edit the structure of the board manually and add a new value to the current column field (see [Customize card structure](#customize-card-structure)). The result will be exactly the same. The ```Create Column```-button is only a shortcut for adding new values to the current column field.
 
@@ -140,7 +140,7 @@ Drag and drop a card to move it across the board. This will change the value of 
 
 Click on a card to edit it. The dialog is almost the same dialog that is used to create a new card:
 
-![](docs/edit-card.png)
+![](docs/edit-card.PNG)
 
 The only difference is the ```Delete```-button in the bottom left corner. This will move the card to an archive folder and remove it from the current board.
 
