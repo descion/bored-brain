@@ -36,7 +36,7 @@ namespace BoredBrain.Views.Previews {
 
             switch (this.definition.Type) {
                 case "Text":
-                    if (string.IsNullOrEmpty((string)this.definition.Value)) {
+                    if (!string.IsNullOrEmpty((string)this.definition.Value)) {
                         TextFieldPreview textInput = new TextFieldPreview();
                         this.Main.Children.Add(textInput);
                         textInput.DataContext = this.definition;
