@@ -58,18 +58,18 @@ namespace BoredBrain.ViewModels {
         public void Apply() {
 
             for (int itFields = 0; itFields < this.Fields.Count; itFields++) {
-                Field existingField = this.structure.Fields.Find((Field f) => { return f.Name == this.Fields[itFields].Name; });
+                Field existingField = this.structure.Fields.First((Field f) => { return f.Name == this.Fields[itFields].Name; });
 
                 if(existingField == null) {
                     Field f = FieldFactory.CreateField((FieldType)Enum.Parse(typeof(FieldType), this.Fields[itFields].Type));
                     f.Name = this.Fields[itFields].Name;
-                    f.PossibleValues = new List<string>(this.Fields[itFields].PossibleValues);
+                    f.SetPossibleValues(new List<string>(this.Fields[itFields].PossibleValues));
                     f.ShowOnCard = this.Fields[itFields].ShowOnCard;
 
                     this.structure.AddField(f);
                 }
                 else {
-                    existingField.PossibleValues = new List<string>(this.Fields[itFields].PossibleValues);
+                    existingField.SetPossibleValues(new List<string>(this.Fields[itFields].PossibleValues));
                     existingField.ShowOnCard = this.Fields[itFields].ShowOnCard;
                 }
             }

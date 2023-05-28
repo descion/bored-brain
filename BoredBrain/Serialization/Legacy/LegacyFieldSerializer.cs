@@ -20,7 +20,7 @@ namespace BoredBrain {
 
         //---------------------------------------------------------------------------
 
-        private static string SerializeValues(List<string> values) {
+        private static string SerializeValues(IList<string> values) {
             StringBuilder dataBuilder = new StringBuilder();
 
             for (int i = 0; i < values.Count; i++) {
@@ -38,7 +38,7 @@ namespace BoredBrain {
 
             Field field = FieldFactory.CreateField(fieldDefinition);
             field.Name = contents[1];
-            field.PossibleValues = DeserializeValues(contents[2]);
+            field.PossibleValues = DeserializeValues(contents[2]).AsReadOnly();
 
             if(contents.Length > 3) {
                 field.ShowOnCard = bool.Parse(contents[3]);

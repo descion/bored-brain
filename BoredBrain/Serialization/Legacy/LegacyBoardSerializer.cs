@@ -86,13 +86,13 @@ namespace BoredBrain.Serialization {
 
             for (int i = 0; i < cardOrder.Count; i++) {
                 if (cards.ContainsKey(cardOrder[i])) {
-                    board.AddCard(cards[cardOrder[i]]);
+                    board.RegisterCard(cards[cardOrder[i]]);
                     cards.Remove(cardOrder[i]);
                 }
             }
 
             foreach (KeyValuePair<string, Card> unorderedCard in cards) {
-                board.AddCard(unorderedCard.Value);
+                board.RegisterCard(unorderedCard.Value);
             }
         }
     }

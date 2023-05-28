@@ -43,11 +43,10 @@ namespace BoredBrain.Views {
 
                 Board templateBoard = new Board(path);
                 SimpleSelectField statusField = new SimpleSelectField() {
-                    Name = "Status",
-                    PossibleValues = new List<string> {
-                        "None"
-                    }
+                    Name = "Status"
                 };
+
+                statusField.AddPossibleValue("None");
 
                 templateBoard.Structure.AddField(statusField);
                 templateBoard.ColumnField = statusField;
@@ -116,7 +115,7 @@ namespace BoredBrain.Views {
 
             addView.OnClose = (bool success) => {
                 if (success) {
-                    this.board.ColumnField.PossibleValues.Add(addView.GetName());
+                    this.board.ColumnField.AddPossibleValue(addView.GetName());
                 }
 
                 this.MainPanel.Children.Remove(addView);

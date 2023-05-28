@@ -27,7 +27,7 @@ namespace BoredBrain.Serialization {
                 string currentLine = definitionReader.ReadLine();
                 while (currentLine != null) {
                     Field f = LegacyFieldSerializer.Deserialize(currentLine);
-                    structure.Fields.Add(f);
+                    structure.AddField(f);
 
                     currentLine = definitionReader.ReadLine();
                 }

@@ -57,10 +57,18 @@ namespace BoredBrain.Models {
         public void Validate() {
 
             Dictionary<Field, object> validatedFields = new Dictionary<Field, object>();
+
+            bool fieldsChanged = false;
             
             foreach (KeyValuePair<Field, object> fieldValue in this.Fields) {
                 if (this.Structure.Fields.Contains(fieldValue.Key)) {
-                    validatedFields[fieldValue.Key] = fieldValue.Key.Validate(fieldValue.Value);
+                    object validatedValue = fieldValue.Key.Validate(fieldValue.Value);
+
+                    validatedFields[fieldValue.Key] = validatedValue;
+
+                    if (!fieldValue.Value.Equals(validatedValue)) {
+                        fieldsChanged = true;
+                    }
                 }
             }
 
@@ -68,10 +76,16 @@ namespace BoredBrain.Models {
                 Field field = this.Structure.Fields[itFields];
                 if (!this.Fields.ContainsKey(field)) {
                     validatedFields.Add(field, field.GetDefaultValue());
+                    fieldsChanged = true;
                 }
             }
 
             this.Fields = validatedFields;
+
+            if (fieldsChanged) {
+                this.OnDataChanged?.Invoke(this);
+            }
+
         }
     }
 }

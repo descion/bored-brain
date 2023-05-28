@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,30 +10,55 @@ namespace BoredBrain.Models {
 
         //---------------------------------------------------------------------------
 
-        public List<Field> Fields { get; private set; }
+        public bool IsModified { get; set; }
+
+        //---------------------------------------------------------------------------
+
+        private List<Field> fields;
+        public ReadOnlyCollection<Field> Fields { 
+            get {
+                return this.fields.AsReadOnly();
+            }
+        }
 
         //---------------------------------------------------------------------------
 
         public Structure() {
-            this.Fields = new List<Field>();
+            this.fields = new List<Field>();
         }
 
         //---------------------------------------------------------------------------
 
         public void AddField(Field f) {
-            this.Fields.Add(f);
+            this.fields.Add(f);
+            f.OnFieldChanged += this.OnFieldChanged;
+            this.SetModified();
         }
 
         //---------------------------------------------------------------------------
 
         public void RemoveField(Field f) {
-            this.Fields.Remove(f);
+            this.fields.Remove(f);
+            f.OnFieldChanged -= this.OnFieldChanged;
+            this.SetModified();
         }
 
         //---------------------------------------------------------------------------
 
         public Field GetFieldByName(string name) {
-            return this.Fields.Find((Field f) => { return f.Name == name; });
+            return this.fields.Find((Field f) => { return f.Name == name; });
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void OnFieldChanged(Field field) {
+            this.SetModified();
+        }
+
+        //---------------------------------------------------------------------------
+
+        private void SetModified() {
+            this.IsModified = true;
         }
     }
 }

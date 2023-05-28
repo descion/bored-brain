@@ -25,7 +25,7 @@ namespace BoredBrain {
             return new FieldJSON() {
                 Type = field.Type.ToString(),
                 Name = field.Name,
-                PossibleValues = field.PossibleValues,
+                PossibleValues = new List<string>(field.PossibleValues),
                 ShowOnCard = field.ShowOnCard
             };
         }
@@ -36,7 +36,7 @@ namespace BoredBrain {
             Field field = FieldFactory.CreateField((FieldType)Enum.Parse(typeof(FieldType), fieldJson.Type));
 
             field.Name = fieldJson.Name;
-            field.PossibleValues = fieldJson.PossibleValues;
+            field.SetPossibleValues(fieldJson.PossibleValues);
             field.ShowOnCard = fieldJson.ShowOnCard;
 
             return field;

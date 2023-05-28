@@ -39,12 +39,17 @@ namespace BoredBrain.Serialization {
             Directory.CreateDirectory(board.Path);
             Directory.CreateDirectory(Path.Combine(board.Path, CARD_FOLDER));
 
-            foreach (Card card in board.Cards) {
+            foreach (Card card in board.ModifiedCards) {
                 File.WriteAllText(Path.Combine(board.Path, CARD_FOLDER, card.Id.ToString() + ".json"), CardSerializer.Serialize(card));
                 boardJson.CardOrder.Add(card.Id.ToString());
             }
 
-            File.WriteAllText(Path.Combine(board.Path, STRUCTURE_FILE), StructureSerializer.Serialize(board.Structure));
+            board.ModifiedCards.Clear();
+
+            if (board.Structure.IsModified) {
+                File.WriteAllText(Path.Combine(board.Path, STRUCTURE_FILE), StructureSerializer.Serialize(board.Structure));
+            }
+
             File.WriteAllText(Path.Combine(board.Path, BOARD_FILE), JsonSerializer.Serialize(boardJson));
         }
 
@@ -76,13 +81,13 @@ namespace BoredBrain.Serialization {
 
             for (int i = 0; i < boardJson.CardOrder.Count; i++) {
                 if (cards.ContainsKey(boardJson.CardOrder[i])) {
-                    board.AddCard(cards[boardJson.CardOrder[i]]);
+                    board.RegisterCard(cards[boardJson.CardOrder[i]]);
                     cards.Remove(boardJson.CardOrder[i]);
                 }
             }
 
             foreach (KeyValuePair<string, Card> unorderedCard in cards) {
-                board.AddCard(unorderedCard.Value);
+                board.RegisterCard(unorderedCard.Value);
             }
         }
     }

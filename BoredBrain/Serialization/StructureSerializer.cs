@@ -23,6 +23,8 @@ namespace BoredBrain.Serialization {
                 structureJson.Fields.Add(FieldSerializer.ToJSONType(structure.Fields[i]));
             }
 
+            structure.IsModified = false;
+
             return JsonSerializer.Serialize(structureJson);
         }
 
@@ -34,8 +36,10 @@ namespace BoredBrain.Serialization {
             Structure structure = new Structure();
 
             for (int i = 0; i < structureJson.Fields.Count; i++) {
-                structure.Fields.Add(FieldSerializer.FromJSONType(structureJson.Fields[i]));
+                structure.AddField(FieldSerializer.FromJSONType(structureJson.Fields[i]));
             }
+
+            structure.IsModified = false;
 
             return structure;
         }

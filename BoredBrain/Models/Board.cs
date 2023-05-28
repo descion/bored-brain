@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 
 namespace BoredBrain.Models {
 
@@ -23,6 +20,8 @@ namespace BoredBrain.Models {
 
         public LinkedList<Card> Cards { get; private set; }
 
+        public List<Card> ModifiedCards { get; private set; }
+
         //---------------------------------------------------------------------------
 
         public delegate void OnBoardChangedDelegate();
@@ -36,6 +35,7 @@ namespace BoredBrain.Models {
             this.Path = path;
             this.Structure = new Structure();
             this.Cards = new LinkedList<Card>();
+            this.ModifiedCards = new List<Card>();
         }
 
         //---------------------------------------------------------------------------
@@ -54,9 +54,16 @@ namespace BoredBrain.Models {
         //---------------------------------------------------------------------------
 
         public void AddCard(Card card) {
-            this.Cards.AddLast(card);
-            card.OnDataChanged += this.OnCardChanged;
+            this.RegisterCard(card);
+            this.OnCardModified(card);
             this.OnBoardChanged?.Invoke();
+        }
+
+        //---------------------------------------------------------------------------
+
+        public void RegisterCard(Card card) {
+            this.Cards.AddLast(card);
+            card.OnDataChanged += this.OnCardModified;
         }
 
         //---------------------------------------------------------------------------
@@ -93,11 +100,13 @@ namespace BoredBrain.Models {
         public void RemoveCard(Card card) {
             this.Cards.Remove(card);
 
-            if (File.Exists(System.IO.Path.Combine(this.Path, card.Id + ".bbc"))) {
+            string cardFileName = card.Id + ".json";
+            string cardsFolder = System.IO.Path.Combine(this.Path, "cards");
+            if (File.Exists(System.IO.Path.Combine(cardsFolder, cardFileName))) {
 
-                Directory.CreateDirectory(System.IO.Path.Combine(this.Path, "Archive"));
+                Directory.CreateDirectory(System.IO.Path.Combine(cardsFolder, "Archive"));
 
-                File.Move(System.IO.Path.Combine(this.Path, card.Id + ".bbc"), System.IO.Path.Combine(this.Path, "Archive", card.Id + ".bbc"));
+                File.Move(System.IO.Path.Combine(cardsFolder, cardFileName), System.IO.Path.Combine(cardsFolder, "Archive", cardFileName));
             }
 
             this.OnBoardChanged?.Invoke();
@@ -105,8 +114,10 @@ namespace BoredBrain.Models {
 
         //---------------------------------------------------------------------------
 
-        private void OnCardChanged(Card c) {
-            this.OnBoardChanged?.Invoke();
+        private void OnCardModified(Card card) {
+            if (!this.ModifiedCards.Contains(card)) {
+                this.ModifiedCards.Add(card);
+            }
         }
 
         //---------------------------------------------------------------------------
