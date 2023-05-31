@@ -54,7 +54,10 @@ namespace BoredBrain.Serialization {
 
             foreach(KeyValuePair<string, string> fieldValue in cardJson.FieldValues) {
                 Field field = structure.GetFieldByName(fieldValue.Key);
-                card.Fields.Add(field, field.ConvertStringToValue(fieldValue.Value));
+                
+                if (field != null) {
+                    card.Fields.Add(field, field.ConvertStringToValue(fieldValue.Value));
+                }
             }
 
             return card;
