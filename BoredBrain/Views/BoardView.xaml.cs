@@ -72,11 +72,9 @@ namespace BoredBrain.Views {
 
         private void CreateBoard_Click(object sender, RoutedEventArgs e) {
             using (System.Windows.Forms.FolderBrowserDialog folderDialog = new System.Windows.Forms.FolderBrowserDialog()) {
-
-                folderDialog.ShowDialog();
-                string boardPath = folderDialog.SelectedPath;
-
-                this.InitializeBoard(boardPath);
+                if (folderDialog.ShowDialog() != System.Windows.Forms.DialogResult.Cancel) {
+                    this.InitializeBoard(folderDialog.SelectedPath);
+                }
             }
         }
 
