@@ -44,6 +44,12 @@ I recommend to backup your data regularly. Due to this app working with local fi
 
 ---
 
+## Installation
+
+Bored Brain is currently a portable application with no installation required. If you wanto to try Bored Brain, go to the releases section (https://github.com/descion/bored-brain/releases), download the latest BoredBrain_vX.X.zip and extract it wherever you want. Run the BoredBrain.exe to start the application.
+
+---
+
 ## Features
 
 ### Manage multiple boards
